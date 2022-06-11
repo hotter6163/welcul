@@ -19,7 +19,7 @@ declare module '@mui/material/Typography' {
 
 export const Header: VFC = () => {
   return (
-    <AppBar position="fixed" color="main">
+    <AppBar position="fixed" color="main" className="px-4 py-2">
       <Link href="/">
         <a>
           <Typography

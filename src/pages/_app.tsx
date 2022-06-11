@@ -18,10 +18,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>新歓情報サイト</title>
       </Head>
       <CustomThemeProvider>
-        <Box sx={{ bgcolor: 'background.paper' }}>
-          <Header />
-          <Component {...pageProps} />
-        </Box>
+        <Component {...pageProps} />
       </CustomThemeProvider>
     </>
   )

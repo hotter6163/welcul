@@ -4,7 +4,7 @@ import { Button, Typography } from '@mui/material'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {
-  return wrapInLayout('top',
+  return wrapInLayout('user',
     <main>
       <Typography variant="body1" gutterBottom>body1 variant</Typography>
       <Typography variant="body2" gutterBottom>body2 variant</Typography>
