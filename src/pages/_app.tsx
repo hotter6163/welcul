@@ -7,6 +7,7 @@ import 'styles/globals.scss'
 
 import { CustomThemeProvider } from 'theme/CustomThemeProvider'
 import { Header } from 'components/layouts/Header'
+import { Box } from '@mui/material'
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -15,12 +16,14 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>新歓情報サイト</title>
       </Head>
-      <div className="display-field">
-        <CustomThemeProvider>
-          <Header />
-          <Component {...pageProps} />
-        </CustomThemeProvider>
-      </div>
+      <CustomThemeProvider>
+        <Box sx={{ bgcolor: 'background.paper' }}>
+          <div className="display-field">
+            <Header />
+            <Component {...pageProps} />
+          </div>
+        </Box>
+      </CustomThemeProvider>
     </>
   )
 }

@@ -1,7 +1,7 @@
 import type { ReactNode, VFC } from 'react'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { orange } from '@mui/material/colors'
+import { orange, lightBlue } from '@mui/material/colors'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -20,21 +20,31 @@ type CustomThemeProps = {
   children: ReactNode
 }
 
-export const CustomThemeProvider: VFC<CustomThemeProps> = ({ children }) => {
-  const theme = createTheme({
-    palette: {
-      main: {
-        main: orange[400]
-      },
-      base: {
-        main: orange[100]
-      },
-      accent: {
-        main: orange[800]
-      }
+let theme = createTheme({
+  palette: {
+    main: {
+      main: orange[500],
+      contrastText: '#fff',
+    },
+    base: {
+      main: orange[50]
+    },
+    accent: {
+      main: lightBlue['A700'],
+      contrastText: '#fff',
     }
-  })
+  }
+})
 
+theme = createTheme(theme, {
+  palette: {
+    background: {
+      paper: theme.palette.base.main
+    }
+  }
+})
+
+export const CustomThemeProvider: VFC<CustomThemeProps> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       {children}
