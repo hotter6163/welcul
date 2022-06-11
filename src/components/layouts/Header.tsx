@@ -13,21 +13,23 @@ declare module '@mui/material/AppBar' {
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    headerTitle: true;
+    headerLogoText: true;
   }
 }
 
 export const Header: VFC = () => {
   return (
     <AppBar position="fixed" color="main">
-      <Typography
-        variant="headerTitle"
-        component="div"
-      >
-        <Link href="/">
-          <a className="text-white font-semibold">新歓情報サイト</a>
-        </Link>
-      </Typography>
+      <Link href="/">
+        <a>
+          <Typography
+            variant="headerLogoText"
+            component="p"
+          >
+            新歓情報サイト
+          </Typography>
+        </a>
+      </Link>
     </AppBar>
   )
 }

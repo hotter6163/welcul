@@ -18,10 +18,10 @@ declare module '@mui/material/styles' {
 
   // Typography
   interface TypographyVariants {
-    headerTitle: React.CSSProperties;
+    headerLogoText: React.CSSProperties;
   }
   interface TypographyVariantsOptions {
-    headerTitle?: React.CSSProperties;
+    headerLogoText?: React.CSSProperties;
   }
 }
 
@@ -44,8 +44,10 @@ let theme = createTheme({
     }
   },
   typography: {
-    headerTitle: {
+    headerLogoText: {
       fontSize: '1.6rem',
+      fontWeight: 600,
+      color: '#fff'
     }
   }
 })
