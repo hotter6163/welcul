@@ -19,15 +19,15 @@ declare module '@mui/material/Typography' {
 
 export const Header: VFC = () => {
   return (
-    <AppBar position="static" color="main">
-      <Link href="/">
-        <Typography
-          variant="headerTitle"
-          component="a"
-        >
-          新歓情報サイト
-        </Typography>
-      </Link>
+    <AppBar position="fixed" color="main">
+      <Typography
+        variant="headerTitle"
+        component="div"
+      >
+        <Link href="/">
+          <a>新歓情報サイト</a>
+        </Link>
+      </Typography>
     </AppBar>
   )
 }

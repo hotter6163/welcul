@@ -45,8 +45,8 @@ let theme = createTheme({
   },
   typography: {
     headerTitle: {
-      fontSize: '2rem',
-      fontWeight: 'bolder',
+      fontSize: '1.8rem',
+      fontWeight: 550,
     }
   }
 })
