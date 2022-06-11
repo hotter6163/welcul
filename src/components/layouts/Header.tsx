@@ -1,4 +1,5 @@
 import type { VFC } from 'react'
+import Link from 'next/link'
 import {
   AppBar,
   Typography
@@ -10,15 +11,23 @@ declare module '@mui/material/AppBar' {
   }
 }
 
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    headerTitle: true;
+  }
+}
+
 export const Header: VFC = () => {
   return (
     <AppBar position="static" color="main">
-      <Typography
-        variant="h5"
-        component="p"
-      >
-        新歓情報サイト
-      </Typography>
+      <Link href="/">
+        <Typography
+          variant="headerTitle"
+          component="a"
+        >
+          新歓情報サイト
+        </Typography>
+      </Link>
     </AppBar>
   )
 }

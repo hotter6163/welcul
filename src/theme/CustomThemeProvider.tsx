@@ -1,9 +1,10 @@
 import type { ReactNode, VFC } from 'react'
 
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import { orange, lightBlue } from '@mui/material/colors'
 
 declare module '@mui/material/styles' {
+  // Palette
   interface Palette {
     main: Palette['primary']
     base: Palette['primary']
@@ -13,6 +14,14 @@ declare module '@mui/material/styles' {
     main?: PaletteOptions['primary']
     base?: PaletteOptions['primary']
     accent?: PaletteOptions['primary']
+  }
+
+  // Typography
+  interface TypographyVariants {
+    headerTitle: React.CSSProperties;
+  }
+  interface TypographyVariantsOptions {
+    headerTitle?: React.CSSProperties;
   }
 }
 
@@ -33,6 +42,12 @@ let theme = createTheme({
       main: lightBlue['A700'],
       contrastText: '#fff',
     }
+  },
+  typography: {
+    headerTitle: {
+      fontSize: '2rem',
+      fontWeight: 'bolder',
+    }
   }
 })
 
@@ -43,6 +58,8 @@ theme = createTheme(theme, {
     }
   }
 })
+
+theme = responsiveFontSizes(theme);
 
 export const CustomThemeProvider: VFC<CustomThemeProps> = ({ children }) => {
   return (

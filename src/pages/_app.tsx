@@ -14,6 +14,7 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <CssBaseline />
       <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>新歓情報サイト</title>
       </Head>
       <CustomThemeProvider>
