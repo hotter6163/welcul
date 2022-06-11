@@ -19,10 +19,8 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <CustomThemeProvider>
         <Box sx={{ bgcolor: 'background.paper' }}>
-          <div className="display-field">
-            <Header />
-            <Component {...pageProps} />
-          </div>
+          <Header />
+          <Component {...pageProps} />
         </Box>
       </CustomThemeProvider>
     </>

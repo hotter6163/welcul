@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 
 const Page: NextPage = () => {
   return (
@@ -18,6 +18,11 @@ const Page: NextPage = () => {
       <Typography variant="overline">overline variant</Typography>
       <Typography variant="subtitle1">subtitle1 variant</Typography>
       <Typography variant="subtitle2">subtitle2 variant</Typography>
+      <div>
+        <Button variant="outlined" size="small">Button</Button>
+        <Button variant="outlined" size="medium">Button</Button>
+        <Button variant="outlined" size="large">Button</Button> 
+      </div>
     </main>
   )
 }
