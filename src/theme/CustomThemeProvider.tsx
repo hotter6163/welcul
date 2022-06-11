@@ -46,7 +46,6 @@ let theme = createTheme({
   typography: {
     headerTitle: {
       fontSize: '1.6rem',
-      fontWeight: 'border',
     }
   }
 })

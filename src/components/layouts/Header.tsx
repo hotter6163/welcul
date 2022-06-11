@@ -25,7 +25,7 @@ export const Header: VFC = () => {
         component="div"
       >
         <Link href="/">
-          <a className="text-white">新歓情報サイト</a>
+          <a className="text-white font-semibold">新歓情報サイト</a>
         </Link>
       </Typography>
     </AppBar>
