@@ -6,23 +6,21 @@ type PageType = 'top' | 'user'
 
 export const wrapInLayout = (
   pageType: PageType,
-  WrappedComponent: ReactElement
+  WrappedPage: ReactElement
 ): ReactElement => {
   let pageWithLayout: ReactElement
   switch (pageType) {
     case 'top':
-      pageWithLayout = (
-        <Box sx={{ bgcolor: 'background.base' }}>
-          {WrappedComponent}
-        </Box>
-      )
+      pageWithLayout = WrappedPage
       break
     case 'user':
       pageWithLayout = (
-        <Box sx={{ bgcolor: 'background.base' }}>
+        <>
           <Header />
-          {WrappedComponent}
-        </Box>
+          <Box component="main" className="mt-20">
+            {WrappedPage}
+          </Box>
+        </>
       )
       break
   }

@@ -32,7 +32,7 @@ type CustomThemeProps = {
 let theme = createTheme({
   palette: {
     main: {
-      main: orange[500],
+      main: orange[400],
       contrastText: '#fff',
     },
     base: {
@@ -55,6 +55,7 @@ let theme = createTheme({
 theme = createTheme(theme, {
   palette: {
     background: {
+      main: theme.palette.main.main,
       base: theme.palette.base.main
     },
     text: {

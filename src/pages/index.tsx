@@ -6,6 +6,7 @@ import {
   Grid,
   Typography
 } from '@mui/material'
+// import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
@@ -17,16 +18,16 @@ declare module '@mui/material/Button' {
 
 const Page: NextPage = () => {
   return wrapInLayout('top',
-    <main>
-      <Container maxWidth="xl">
+    <Box component="main">
+      <Container maxWidth="xl" sx={{ bgcolor: 'background.main'}}>
         <Grid container className="h-screen">
           <Grid item xs={12} className="flex">
-            <div className="self-center">
+            <div className="self-center w-full text-center">
               <Typography
                 variant="h1"
                 sx={{ color: "text.accent" }}
               >
-                新歓情報サイト
+                新歓情報
               </Typography>
             </div>
           </Grid>
@@ -38,7 +39,7 @@ const Page: NextPage = () => {
                 </Button>
               </div>
               <div className="text-center my-4">
-                <Button variant="outlined" color="accent" size="large">
+                <Button variant="outlined" color="accent" size="large" className="bg-white">
                   どんなイベントがあるか見る
                 </Button>
               </div>
@@ -51,7 +52,7 @@ const Page: NextPage = () => {
           </Grid>
         </Grid>
       </Container>
-    </main>
+    </Box>
   )
 }
 

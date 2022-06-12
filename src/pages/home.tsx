@@ -5,7 +5,7 @@ import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {
   return wrapInLayout('user',
-    <main>
+    <>
       <Typography variant="body1" gutterBottom>body1 variant</Typography>
       <Typography variant="body2" gutterBottom>body2 variant</Typography>
       <Typography variant="button" display="block" gutterBottom>button variant</Typography>
@@ -25,7 +25,7 @@ const Page: NextPage = () => {
         <Button variant="outlined" size="medium">Button</Button>
         <Button variant="outlined" size="large">Button</Button>
       </div>
-    </main>
+    </>
   )
 }
 
