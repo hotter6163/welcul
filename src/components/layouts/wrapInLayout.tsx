@@ -12,14 +12,14 @@ export const wrapInLayout = (
   switch (pageType) {
     case 'top':
       pageWithLayout = (
-        <Box sx={{ bgcolor: 'background.paper' }}>
+        <Box sx={{ bgcolor: 'background.base' }}>
           {WrappedComponent}
         </Box>
       )
       break
     case 'user':
       pageWithLayout = (
-        <Box sx={{ bgcolor: 'background.paper' }}>
+        <Box sx={{ bgcolor: 'background.base' }}>
           <Header />
           {WrappedComponent}
         </Box>

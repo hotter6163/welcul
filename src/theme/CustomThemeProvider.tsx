@@ -55,7 +55,8 @@ let theme = createTheme({
 theme = createTheme(theme, {
   palette: {
     background: {
-      paper: theme.palette.base.main
+      paper: theme.palette.base.main,
+      base: theme.palette.base.main
     }
   }
 })
