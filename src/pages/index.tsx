@@ -1,4 +1,6 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
+import * as fs from 'fs'
+import * as path from 'path'
 import {
   Box,
   Button,
@@ -6,7 +8,7 @@ import {
   Grid,
   Typography
 } from '@mui/material'
-// import useScrollTrigger from '@mui/material/useScrollTrigger';
+
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
@@ -16,7 +18,15 @@ declare module '@mui/material/Button' {
   }
 }
 
-const Page: NextPage = () => {
+type DisplayItem = {
+  id: string
+  title: string
+  text: string
+}
+
+const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
+  console.log(displayItems)
+
   return wrapInLayout('top',
     <Box component="main">
       <Container maxWidth="xl" sx={{ bgcolor: 'background.main'}}>
@@ -54,6 +64,18 @@ const Page: NextPage = () => {
       </Container>
     </Box>
   )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+  const jsonPath = path.join(process.cwd(), 'src', 'data', 'json', 'topPageItems.json')
+  const jsonText = fs.readFileSync(jsonPath, 'utf-8')
+  const displayItems = JSON.parse(jsonText) as DisplayItem[]
+
+  return {
+    props: {
+      displayItems
+    }
+  }
 }
 
 export default Page
