@@ -1,30 +1,53 @@
 import type { NextPage } from 'next'
-import { Button, Typography } from '@mui/material'
+import {
+  Button,
+  Container,
+  Grid,
+  Typography
+} from '@mui/material'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    accent: true;
+  }
+}
 
 const Page: NextPage = () => {
   return wrapInLayout('top',
     <main>
-      <Typography variant="body1" gutterBottom>body1 variant</Typography>
-      <Typography variant="body2" gutterBottom>body2 variant</Typography>
-      <Typography variant="button" display="block" gutterBottom>button variant</Typography>
-      <Typography variant="caption" display="block" gutterBottom>caption variant</Typography>
-      <Typography variant="h1" gutterBottom>h1 variant</Typography>
-      <Typography variant="h2" gutterBottom>h2 variant</Typography>
-      <Typography variant="h3" gutterBottom>h3 variant</Typography>
-      <Typography variant="h4" gutterBottom>h4 variant</Typography>
-      <Typography variant="h5" gutterBottom>h5 variant</Typography>
-      <Typography variant="h6" gutterBottom>h6 variant</Typography>
-      <Typography variant="inherit" gutterBottom>inherit variant</Typography>
-      <Typography variant="overline" gutterBottom>overline variant</Typography>
-      <Typography variant="subtitle1" gutterBottom>subtitle1 variant</Typography>
-      <Typography variant="subtitle2" gutterBottom>subtitle2 variant</Typography>
-      <div>
-        <Button variant="outlined" size="small">Button</Button>
-        <Button variant="outlined" size="medium">Button</Button>
-        <Button variant="outlined" size="large">Button</Button>
-      </div>
+      <Container maxWidth="xl">
+        <Grid container className="h-screen">
+          <Grid item xs={12} lg={8}>
+            <div className="align-middle inline-block">
+              <Typography
+                variant="h1"
+                sx={{ color: "text.accent" }}
+              >
+                新歓情報サイト
+              </Typography>
+            </div>
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <div className="text-center">
+              <Button variant="contained" color="accent" size="large">
+                ユーザー登録して使い始める
+              </Button>
+            </div>
+            <div className="text-center">
+              <Button variant="outlined" color="accent" size="large">
+                どんなイベントがあるのか見てみる
+              </Button>
+            </div>
+            <div className="text-center">
+              <Button variant="contained" color="secondary" size="large">
+                ログインする
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
     </main>
   )
 }
