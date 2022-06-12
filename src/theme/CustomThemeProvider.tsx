@@ -45,7 +45,7 @@ let theme = createTheme({
   },
   typography: {
     headerLogoText: {
-      fontSize: '1.6rem',
+      fontSize: '1.5rem',
       fontWeight: 600,
       color: '#fff'
     }
