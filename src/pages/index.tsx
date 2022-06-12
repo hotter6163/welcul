@@ -25,7 +25,21 @@ type DisplayItem = {
 }
 
 const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
-  console.log(displayItems)
+  const renderedItems = displayItems.map((item, index) => (
+    <Box
+      key={item.id}
+      component="section"
+      sx={{
+        bgcolor: `${index % 2 === 0 ? "background.base" : "" }`,
+        height: '50vh'
+      }}
+    >
+      <Container fixed>
+        <Typography variant="h3">{item.title}</Typography>
+        <Typography variant="subtitle1">{item.text}</Typography>
+      </Container>
+    </Box>
+  ))
 
   return wrapInLayout('top',
     <Box component="main">
@@ -62,6 +76,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
           </Grid>
         </Grid>
       </Container>
+      {renderedItems}
     </Box>
   )
 }
