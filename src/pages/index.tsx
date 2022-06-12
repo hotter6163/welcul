@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import {
+  Box,
   Button,
   Container,
   Grid,
@@ -19,8 +20,8 @@ const Page: NextPage = () => {
     <main>
       <Container maxWidth="xl">
         <Grid container className="h-screen">
-          <Grid item xs={12} lg={8}>
-            <div className="align-middle inline-block">
+          <Grid item xs={12} className="flex">
+            <div className="self-center">
               <Typography
                 variant="h1"
                 sx={{ color: "text.accent" }}
@@ -29,21 +30,23 @@ const Page: NextPage = () => {
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={12} lg={4}>
-            <div className="text-center">
-              <Button variant="contained" color="accent" size="large">
-                ユーザー登録して使い始める
-              </Button>
-            </div>
-            <div className="text-center">
-              <Button variant="outlined" color="accent" size="large">
-                どんなイベントがあるのか見てみる
-              </Button>
-            </div>
-            <div className="text-center">
-              <Button variant="contained" color="secondary" size="large">
-                ログインする
-              </Button>
+          <Grid item xs={12} className="flex">
+            <div className="self-center w-full">
+              <div className="text-center my-4">
+                <Button variant="contained" color="accent" size="large">
+                  ユーザー登録して使い始める
+                </Button>
+              </div>
+              <div className="text-center my-4">
+                <Button variant="outlined" color="accent" size="large">
+                  どんなイベントがあるか見る
+                </Button>
+              </div>
+              <div className="text-center my-4">
+                <Button variant="contained" color="secondary" size="large">
+                  ログイン
+                </Button>
+              </div>
             </div>
           </Grid>
         </Grid>
