@@ -12,7 +12,7 @@ import {
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 import { useIsVertically } from 'hooks/useIsVertically'
-import mainImage from 'public/images/top_main.png'
+
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -53,9 +53,9 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
             <Grid item xs={isVertically ? 12 : 8} className="flex">
               <div className="self-center w-full text-center">
                 <Image
-                  src={mainImage}
-                  width={500}
-                  height={500}
+                  src='/images/top_main.png'
+                  width={300}
+                  height={300}
                   alt="mainの画像"
                 />
                 <Typography
