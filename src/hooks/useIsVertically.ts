@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export const useIsVertically = (): boolean => {
-  if (window === undefined) return false
 
+export const useIsVertically = (): boolean => {
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window
     return {
@@ -11,7 +10,9 @@ export const useIsVertically = (): boolean => {
     }
   }
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions())
+  const [windowDimensions, setWindowDimensions] =
+    useState<{ width: number, height: number }>({ width: 3, height: 5 })
+
   useEffect(() => {
     const onResize = () => {
       setWindowDimensions(getWindowDimensions());
