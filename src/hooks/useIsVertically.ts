@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 
 export const useIsVertically = (): boolean => {
+  if (!window) return false
+  
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window
     return {
