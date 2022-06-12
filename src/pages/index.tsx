@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
 import * as fs from 'fs'
 import * as path from 'path'
 import {
@@ -11,6 +12,7 @@ import {
 
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
+import { useIsVertically } from 'hooks/useIsVertically'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -25,6 +27,8 @@ type DisplayItem = {
 }
 
 const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
+  const isVertically = useIsVertically()
+
   const renderedItems = displayItems.map((item, index) => (
     <Box
       key={item.id}
@@ -34,7 +38,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
         height: '50vh'
       }}
     >
-      <Container fixed>
+      <Container maxWidth="md">
         <Typography variant="h3">{item.title}</Typography>
         <Typography variant="subtitle1">{item.text}</Typography>
       </Container>
@@ -46,7 +50,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
       <Box component="section" sx={{ bgcolor: 'background.main'}}>
         <Container maxWidth="xl">
           <Grid container className="h-screen">
-            <Grid item xs={12} className="flex">
+            <Grid item xs={isVertically ? 12 : 8} className="flex">
               <div className="self-center w-full text-center">
                 <Typography
                   variant="h1"
@@ -56,7 +60,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={12} className="flex">
+            <Grid item xs={isVertically ? 12 : 4} className="flex">
               <div className="self-center w-full">
                 <div className="text-center my-4">
                   <Button variant="contained" color="accent" size="large">
