@@ -10,9 +10,9 @@ import {
   Typography
 } from '@mui/material'
 
-
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 import { useIsVertically } from 'hooks/useIsVertically'
+import mainImage from 'public/images/top_main.png'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -52,6 +52,12 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
           <Grid container className="h-screen">
             <Grid item xs={isVertically ? 12 : 8} className="flex">
               <div className="self-center w-full text-center">
+                <Image
+                  src={mainImage}
+                  width={500}
+                  height={500}
+                  alt="mainの画像"
+                />
                 <Typography
                   variant="h1"
                   sx={{ color: "text.accent" }}
