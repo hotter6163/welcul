@@ -69,17 +69,17 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
             <Grid item xs={isVertically ? 12 : 4} className="flex">
               <div className="self-center w-full">
                 <div className="text-center my-4">
-                  <Button variant="contained" color="accent" size="large">
+                  <Button variant="contained" color="accent" size="large" fullWidth>
                     ユーザー登録して使い始める
                   </Button>
                 </div>
                 <div className="text-center my-4">
-                  <Button variant="outlined" color="accent" size="large" className="bg-white">
+                  <Button variant="outlined" color="accent" size="large" className="bg-white" fullWidth>
                     どんなイベントがあるか見る
                   </Button>
                 </div>
                 <div className="text-center my-4">
-                  <Button variant="contained" color="secondary" size="large">
+                  <Button variant="contained" color="secondary" size="large" fullWidth>
                     ログイン
                   </Button>
                 </div>
