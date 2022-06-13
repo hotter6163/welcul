@@ -66,15 +66,7 @@ theme = createTheme(theme, {
       fontWeight: 600,
       fontFamily: 'Libre Baskerville',
       color: '#fff',
-      [theme.breakpoints.down('tablet')]: {
-        fontSize: '1.5rem',
-      },
-      [theme.breakpoints.up('tablet')]: {
-
-      },
-      [theme.breakpoints.up("desktop")]: {
-
-      }
+      fontSize: '1.5rem',
     }
   }
 })

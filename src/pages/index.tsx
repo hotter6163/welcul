@@ -28,18 +28,20 @@ type PageProps = {
 const Page: NextPage<PageProps> = () => {
   return wrapInLayout('top',
     <Box component="main">
-      <Box component="section" sx={{ bgcolor: 'background.main'}}>
-        <Container sx={{ maxWidth: 1200}}>
-          <Grid container className="h-screen">
+      <Box
+        component="section"
+        sx={{ bgcolor: 'background.main' }}
+      >
+        <Container sx={{ maxWidth: 1200 }}>
+          <Grid container className="h-screen" sx={{ pb: "1.5rem" }}>
             <Grid item className="flex" sx={{
               flexGrow: 0,
               flexBasis: "100%",
-              maxWidth: "100%",
-              minHeight: "50%",
+              Width: "100%",
               "@media screen and (min-aspect-ratio: 1/1)": {
                 flexGrow: 0,
                 flexBasis: "60%",
-                maxWidth: "60%",
+                Width: "60%",
               }
             }}>
               <div className="self-center w-full">
@@ -57,12 +59,11 @@ const Page: NextPage<PageProps> = () => {
             <Grid item className="flex" sx={{
               flexGrow: 0,
               flexBasis: "100%",
-              maxWidth: "100%",
-              minHeight: "40%",
+              Width: "100%",
               "@media screen and (min-aspect-ratio: 1/1)": {
                 flexGrow: 0,
                 flexBasis: "40%",
-                maxWidth: "40%",
+                Width: "40%",
               }
             }}>
               <div className="self-center w-full">
