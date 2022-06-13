@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
+import Link from 'next/link'
 import * as fs from 'fs'
 import * as path from 'path'
 import {
@@ -95,40 +96,46 @@ const Page: NextPage<PageProps> = () => {
                   </Grid>
                 </Grid>
                 <div className="text-center my-4">
-                  <Button
-                    variant="contained"
-                    color="accent"
-                    size="large"
-                    fullWidth
-                  >
-                    ユーザー登録して使い始める
-                  </Button>
+                  <Link href="/signup">
+                    <Button
+                      variant="contained"
+                      color="accent"
+                      size="large"
+                      fullWidth
+                    >
+                      ユーザー登録して使い始める
+                    </Button>
+                  </Link>
                 </div>
                 <div className="text-center my-4">
-                  <Button
-                    variant="outlined"
-                    color="accent"
-                    size="large"
-                    sx={{
-                      bgcolor: "#fff",
-                      ":hover": {
+                  <Link href="/home">
+                    <Button
+                      variant="outlined"
+                      color="accent"
+                      size="large"
+                      sx={{
                         bgcolor: "#fff",
-                      }
-                    }}
-                    fullWidth
-                  >
-                    どんなイベントがあるか見る
-                  </Button>
+                        ":hover": {
+                          bgcolor: "#fff",
+                        }
+                      }}
+                      fullWidth
+                    >
+                      どんなイベントがあるか見る
+                    </Button>
+                  </Link>
                 </div>
                 <div className="text-center my-4">
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    fullWidth
-                  >
-                    ログイン
-                  </Button>
+                  <Link href="/signin">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="large"
+                      fullWidth
+                    >
+                      ログイン
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Grid>
