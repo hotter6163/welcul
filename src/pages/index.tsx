@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
-import { useIsVertically } from 'hooks/useIsVertically'
+import { useWindowDimensions } from 'hooks/useWindowDimensions'
 
 
 declare module '@mui/material/Button' {
@@ -27,7 +27,9 @@ type DisplayItem = {
 }
 
 const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
-  const isVertically = useIsVertically()
+  // SSGのための初期値としてiPhone SEの値を使用
+  const { width, height } = useWindowDimensions({ width: 375, height: 667 })
+  const isVertically = width < height ? true : false
 
   const renderedItems = displayItems.map((item, index) => (
     <Box
