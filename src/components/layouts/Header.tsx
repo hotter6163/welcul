@@ -8,17 +8,7 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 
-declare module '@mui/material/AppBar' {
-  interface AppBarPropsColorOverrides {
-    main: true
-  }
-}
-
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    headerLogoText: true;
-  }
-}
+import { Logo } from './Logo'
 
 export const Header: VFC = () => {
   return (
@@ -26,12 +16,7 @@ export const Header: VFC = () => {
       <Toolbar className="justify-between">
         <Link href="/">
           <a className="no-underline">
-            <Typography
-              variant="headerLogoText"
-              component="p"
-            >
-              新歓情報
-            </Typography>
+            <Logo />
           </a>
         </Link>
         <IconButton

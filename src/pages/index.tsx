@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import * as fs from 'fs'
@@ -12,7 +11,7 @@ import {
 } from '@mui/material'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
-
+import { Logo } from 'components/layouts/Logo'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -65,12 +64,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                   height={300}
                   alt="mainの画像"
                 />
-                <Typography
-                  variant="h1"
-                  sx={{ color: "text.accent" }}
-                >
-                  新歓情報
-                </Typography>
+                <Logo type="top" />
               </div>
             </Grid>
             <Grid item className="flex" sx={{

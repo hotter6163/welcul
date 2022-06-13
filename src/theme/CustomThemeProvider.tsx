@@ -3,27 +3,7 @@ import type { ReactNode, VFC } from 'react'
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import { orange, lightBlue } from '@mui/material/colors'
 
-declare module '@mui/material/styles' {
-  // Palette
-  interface Palette {
-    main: Palette['primary']
-    base: Palette['primary']
-    accent: Palette['primary']
-  }
-  interface PaletteOptions {
-    main?: PaletteOptions['primary']
-    base?: PaletteOptions['primary']
-    accent?: PaletteOptions['primary']
-  }
-
-  // Typography
-  interface TypographyVariants {
-    headerLogoText: React.CSSProperties;
-  }
-  interface TypographyVariantsOptions {
-    headerLogoText?: React.CSSProperties;
-  }
-}
+import 'theme/moduleAugmentation'
 
 type CustomThemeProps = {
   children: ReactNode
@@ -43,13 +23,6 @@ let theme = createTheme({
       contrastText: '#fff',
     }
   },
-  typography: {
-    headerLogoText: {
-      fontSize: '1.5rem',
-      fontWeight: 600,
-      color: '#fff'
-    }
-  }
 })
 
 theme = createTheme(theme, {
@@ -60,6 +33,18 @@ theme = createTheme(theme, {
     },
     text: {
       accent: theme.palette.accent.main
+    }
+  },
+  typography: {
+    logoTop: {
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      color: '#fff'
+    },
+    logoHeader: {
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      color: '#fff'
     }
   }
 })
