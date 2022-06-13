@@ -9,7 +9,7 @@ import { wrapInLayout } from 'components/layouts/wrapInLayout'
 const Page: NextPage = () => {
   return wrapInLayout('user',
     <Box className="text-center">
-      <Typography variant="h1">
+      <Typography variant="h2" component="h1">
         ログイン
       </Typography>
     </Box>
