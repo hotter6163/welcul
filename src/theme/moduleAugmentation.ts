@@ -38,3 +38,9 @@ declare module '@mui/material/Typography' {
     logoHeader: true;
   }
 }
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    accent: true;
+  }
+}

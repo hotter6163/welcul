@@ -1,5 +1,4 @@
 import type { GetStaticProps, NextPage } from 'next'
-import Image from 'next/image'
 import * as fs from 'fs'
 import * as path from 'path'
 import {
@@ -9,15 +8,12 @@ import {
   Grid,
   Typography
 } from '@mui/material'
+import ArrowDownwardSharpIcon from '@mui/icons-material/ArrowDownwardSharp';
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 import { Logo } from 'components/layouts/Logo'
 
-declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides {
-    accent: true;
-  }
-}
+import 'theme/moduleAugmentation'
 
 type DisplayItem = {
   id: string
@@ -64,7 +60,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                   className="text-white text-left"
                   gutterBottom
                 >
-                  新刊情報サイト
+                  新歓情報サイト
                 </Typography>
                 <Logo type="top" />
               </div>
@@ -80,6 +76,33 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
               }
             }}>
               <div className="self-center w-full">
+                <Grid container className="justify-center">
+                  <Grid item xs={1}>
+                    <ArrowDownwardSharpIcon
+                      sx={{
+                        color: "#fff",
+                        fontSize: "2rem"
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={8} className="text-center">
+                    <Typography
+                      variant="h4"
+                      component="p"
+                      className="inline text-white"
+                    >
+                      ご利用はこちらから
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <ArrowDownwardSharpIcon
+                      sx={{
+                        color: "#fff",
+                        fontSize: "2rem"
+                      }}
+                    />
+                  </Grid>
+                </Grid>
                 <div className="text-center my-4">
                   <Button
                     variant="contained"
