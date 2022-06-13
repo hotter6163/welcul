@@ -57,13 +57,15 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                 maxWidth: "60%",
               }
             }}>
-              <div className="self-center w-full text-center">
-                <Image
-                  src='/images/top_main.png'
-                  width={300}
-                  height={300}
-                  alt="mainの画像"
-                />
+              <div className="self-center w-full">
+                <Typography
+                  variant="h2"
+                  component="p"
+                  className="text-white text-left"
+                  gutterBottom
+                >
+                  新刊情報サイト
+                </Typography>
                 <Logo type="top" />
               </div>
             </Grid>
@@ -79,17 +81,33 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
             }}>
               <div className="self-center w-full">
                 <div className="text-center my-4">
-                  <Button variant="contained" color="accent" size="large" fullWidth>
+                  <Button
+                    variant="contained"
+                    color="accent"
+                    size="large"
+                    fullWidth
+                  >
                     ユーザー登録して使い始める
                   </Button>
                 </div>
                 <div className="text-center my-4">
-                  <Button variant="outlined" color="accent" size="large" className="bg-white" fullWidth>
+                  <Button
+                    variant="outlined"
+                    color="accent"
+                    size="large"
+                    sx={{ bgcolor: "#fff" }}
+                    fullWidth
+                  >
                     どんなイベントがあるか見る
                   </Button>
                 </div>
                 <div className="text-center my-4">
-                  <Button variant="contained" color="secondary" size="large" fullWidth>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    fullWidth
+                  >
                     ログイン
                   </Button>
                 </div>

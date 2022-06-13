@@ -2,7 +2,6 @@ import type { VFC } from 'react'
 import Link from 'next/link'
 import {
   AppBar,
-  Typography,
   IconButton,
   Toolbar
 } from '@mui/material'

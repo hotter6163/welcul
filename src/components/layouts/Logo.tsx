@@ -1,5 +1,5 @@
 import type { VFC } from 'react'
-import { Typography, TypographyVariants } from '@mui/material';
+import { Box, Typography, TypographyVariants } from '@mui/material';
 
 import 'theme/moduleAugmentation'
 
@@ -18,12 +18,13 @@ export const Logo: VFC<PropsType> = ({ type = 'header' }) => {
   }
 
   return (
-    <Typography
-      variant={variant}
-      component="p"
-    >
-      WelCul
-    </Typography>
-
+    <Box className="text-center">
+      <Typography
+        variant={variant}
+        component="p"
+      >
+        WelCul
+      </Typography>
+    </Box>
   )
 }

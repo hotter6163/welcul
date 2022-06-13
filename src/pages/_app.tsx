@@ -14,6 +14,10 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>新歓情報サイト</title>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap" 
+        />
       </Head>
       <CustomThemeProvider>
         <Component {...pageProps} />

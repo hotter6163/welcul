@@ -23,13 +23,18 @@ let theme = createTheme({
       contrastText: '#fff',
     }
   },
+  typography: {
+    fontFamily: [
+      '"Noto Sans JP"',
+    ].join(',')
+  }
 })
 
 theme = createTheme(theme, {
   palette: {
     background: {
       main: theme.palette.main.main,
-      base: theme.palette.base.main
+      base: theme.palette.base.main,
     },
     text: {
       accent: theme.palette.accent.main
@@ -37,13 +42,15 @@ theme = createTheme(theme, {
   },
   typography: {
     logoTop: {
-      fontSize: '1.5rem',
+      fontSize: '5.5rem',
       fontWeight: 600,
-      color: '#fff'
+      fontFamily: 'Libre Baskerville',
+      color: theme.palette.accent.main
     },
     logoHeader: {
       fontSize: '1.5rem',
       fontWeight: 600,
+      fontFamily: 'Libre Baskerville',
       color: '#fff'
     }
   }
