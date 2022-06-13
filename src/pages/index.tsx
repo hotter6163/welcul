@@ -12,7 +12,6 @@ import {
 } from '@mui/material'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
-import { useWindowDimensions } from 'hooks/useWindowDimensions'
 
 
 declare module '@mui/material/Button' {
@@ -28,29 +27,13 @@ type DisplayItem = {
 }
 
 const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
-  // SSGのための初期値としてiPhone SEの値を使用
-  const { width, height } = useWindowDimensions({ width: 375, height: 667 })
-  const isVertically = width < height ? true : false
-
-  // SSGのせいで横向きの画面のときに画面の標示が気持ち悪いからその対策
-  // windowオブジェクトが存在しない場合はmainタグのみ返す
-  const [isWindow, setIsWindow] = useState<boolean>(typeof window !== undefined)
-  useEffect(() => {
-    setIsWindow(typeof window !== undefined)
-  }, [])
-  if (!isWindow) {
-    return (
-      <Box component="main"></Box>
-    )
-  }
-
   const renderedItems = displayItems.map((item, index) => (
     <Box
       key={item.id}
       component="section"
       sx={{
         bgcolor: `${index % 2 === 0 ? "background.base" : "" }`,
-        height: '50vh'
+        minHeight: '50vh'
       }}
     >
       <Container maxWidth="md">
@@ -63,9 +46,18 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
   return wrapInLayout('top',
     <Box component="main">
       <Box component="section" sx={{ bgcolor: 'background.main'}}>
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <Grid container className="h-screen">
-            <Grid item xs={isVertically ? 12 : 8} className="flex">
+            <Grid item className="flex" sx={{
+              flexGrow: 0,
+              flexBasis: "100%",
+              maxWidth: "100%",
+              "@media screen and (min-aspect-ratio: 1/1)": {
+                flexGrow: 0,
+                flexBasis: "60%",
+                maxWidth: "60%",
+              }
+            }}>
               <div className="self-center w-full text-center">
                 <Image
                   src='/images/top_main.png'
@@ -81,7 +73,16 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={isVertically ? 12 : 4} className="flex">
+            <Grid item className="flex" sx={{
+              flexGrow: 0,
+              flexBasis: "100%",
+              maxWidth: "100%",
+              "@media screen and (min-aspect-ratio: 1/1)": {
+                flexGrow: 0,
+                flexBasis: "40%",
+                maxWidth: "40%",
+              }
+            }}>
               <div className="self-center w-full">
                 <div className="text-center my-4">
                   <Button variant="contained" color="accent" size="large" fullWidth>
