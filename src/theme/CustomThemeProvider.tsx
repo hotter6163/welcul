@@ -48,6 +48,72 @@ theme = createTheme(theme, {
     }
   },
   typography: {
+    h1: {
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '3.5rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "4.71rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "5.36rem"
+      }
+    },
+    h2: {
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '2.38rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "3.13rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "3.33rem"
+      }
+    },
+    h3: {
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '2rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "2.57rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "2.78rem"
+      }
+    },
+    h4: {
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '1.56rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "1.82rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "2.02rem"
+      }
+    },
+    h5: {
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '1.25rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "1.31rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "1.5rem"
+      }
+    },
+    h6: {
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '1.13rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "1.25rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "1.25rem"
+      }
+    },
     logoTop: {
       fontWeight: 600,
       fontFamily: 'Libre Baskerville',

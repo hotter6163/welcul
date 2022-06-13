@@ -1,5 +1,5 @@
 import { ReactElement } from "react"
-import { Box } from "@mui/material"
+import { Container } from "@mui/material"
 import { Header } from "./Header"
 
 type PageType = 'top' | 'user'
@@ -17,9 +17,9 @@ export const wrapInLayout = (
       pageWithLayout = (
         <>
           <Header />
-          <Box component="main" className="mt-20">
+          <Container maxWidth="desktop" component="main" className="mt-20 px-4">
             {WrappedPage}
-          </Box>
+          </Container>
         </>
       )
       break
