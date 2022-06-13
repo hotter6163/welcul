@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import * as fs from 'fs'
@@ -30,6 +31,18 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
   // SSGのための初期値としてiPhone SEの値を使用
   const { width, height } = useWindowDimensions({ width: 375, height: 667 })
   const isVertically = width < height ? true : false
+
+  // SSGのせいで横向きの画面のときに画面の標示が気持ち悪いからその対策
+  // windowオブジェクトが存在しない場合はmainタグのみ返す
+  const [isWindow, setIsWindow] = useState<boolean>(typeof window !== undefined)
+  useEffect(() => {
+    setIsWindow(typeof window !== undefined)
+  }, [])
+  if (!isWindow) {
+    return (
+      <Box component="main"></Box>
+    )
+  }
 
   const renderedItems = displayItems.map((item, index) => (
     <Box
