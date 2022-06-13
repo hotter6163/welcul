@@ -6,9 +6,10 @@ import {
   Button,
   Container,
   Grid,
-  Typography
+  Typography,
 } from '@mui/material'
-import ArrowDownwardSharpIcon from '@mui/icons-material/ArrowDownwardSharp';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 import { Logo } from 'components/layouts/Logo'
@@ -21,23 +22,11 @@ type DisplayItem = {
   text: string
 }
 
-const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
-  const renderedItems = displayItems.map((item, index) => (
-    <Box
-      key={item.id}
-      component="section"
-      sx={{
-        bgcolor: `${index % 2 === 0 ? "background.base" : "" }`,
-        minHeight: '50vh'
-      }}
-    >
-      <Container maxWidth="md">
-        <Typography variant="h3">{item.title}</Typography>
-        <Typography variant="subtitle1">{item.text}</Typography>
-      </Container>
-    </Box>
-  ))
+type PageProps = {
+  displayItems: DisplayItem[]
+}
 
+const Page: NextPage<PageProps> = () => {
   return wrapInLayout('top',
     <Box component="main">
       <Box component="section" sx={{ bgcolor: 'background.main'}}>
@@ -47,6 +36,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
               flexGrow: 0,
               flexBasis: "100%",
               maxWidth: "100%",
+              minHeight: "50%",
               "@media screen and (min-aspect-ratio: 1/1)": {
                 flexGrow: 0,
                 flexBasis: "60%",
@@ -69,6 +59,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
               flexGrow: 0,
               flexBasis: "100%",
               maxWidth: "100%",
+              minHeight: "40%",
               "@media screen and (min-aspect-ratio: 1/1)": {
                 flexGrow: 0,
                 flexBasis: "40%",
@@ -76,9 +67,9 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
               }
             }}>
               <div className="self-center w-full">
-                <Grid container className="justify-center">
+                <Grid container className="justify-center ">
                   <Grid item xs={1}>
-                    <ArrowDownwardSharpIcon
+                    <ArrowDownwardIcon
                       sx={{
                         color: "#fff",
                         fontSize: "2rem"
@@ -95,7 +86,7 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                     </Typography>
                   </Grid>
                   <Grid item xs={1}>
-                    <ArrowDownwardSharpIcon
+                    <ArrowDownwardIcon
                       sx={{
                         color: "#fff",
                         fontSize: "2rem"
@@ -136,16 +127,43 @@ const Page: NextPage<{ displayItems: DisplayItem[] }> = ({ displayItems }) => {
                 </div>
               </div>
             </Grid>
+            <Grid
+              item
+              xs={12}
+              className="flex"
+              sx={{ maxHeight: "10%" }}
+            >
+              <div className="self-center text-center w-full">
+                <KeyboardDoubleArrowUpIcon
+                  sx={{
+                    color: "#fff",
+                    fontSize: "1.5rem"
+                  }}
+                />
+                <Typography
+                  variant="h5"
+                  component="p"
+                  className="text-white mb-4"
+                >
+                  このサイトについて詳しく
+                </Typography>
+              </div>
+            </Grid>
           </Grid>
         </Container>
       </Box>
-      {renderedItems}
     </Box>
   )
 }
 
 export const getStaticProps: GetStaticProps = () => {
-  const jsonPath = path.join(process.cwd(), 'src', 'data', 'json', 'topPageItems.json')
+  const jsonPath = path.join(
+    process.cwd(),
+    'src',
+    'data',
+    'json',
+    'topPageItems.json'
+  )
   const jsonText = fs.readFileSync(jsonPath, 'utf-8')
   const displayItems = JSON.parse(jsonText) as DisplayItem[]
 
