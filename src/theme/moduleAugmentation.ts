@@ -22,6 +22,18 @@ declare module '@mui/material/styles' {
     logoHeader?: React.CSSProperties;
     logoTop?: React.CSSProperties;
   }
+
+  // Breakpoint
+  interface BreakpointOverrides {
+    xs: false; // removes the `xs` breakpoint
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true; // adds the `mobile` breakpoint
+    tablet: true;
+    desktop: true;
+  }
 }
 
 declare module '@mui/material/AppBar' {

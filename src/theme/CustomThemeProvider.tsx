@@ -27,6 +27,13 @@ let theme = createTheme({
     fontFamily: [
       '"Noto Sans JP"',
     ].join(',')
+  },
+  breakpoints: {
+    values: {
+      mobile: 0,
+      tablet: 600,
+      desktop: 1025,
+    },
   }
 })
 
@@ -42,21 +49,37 @@ theme = createTheme(theme, {
   },
   typography: {
     logoTop: {
-      fontSize: '5.5rem',
       fontWeight: 600,
       fontFamily: 'Libre Baskerville',
-      color: theme.palette.accent.main
+      color: theme.palette.accent.main,
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '5rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+        fontSize: "7rem"
+      },
+      [theme.breakpoints.up("desktop")]: {
+        fontSize: "8rem"
+      }
     },
     logoHeader: {
-      fontSize: '1.5rem',
       fontWeight: 600,
       fontFamily: 'Libre Baskerville',
-      color: '#fff'
+      color: '#fff',
+      [theme.breakpoints.down('tablet')]: {
+        fontSize: '1.5rem',
+      },
+      [theme.breakpoints.up('tablet')]: {
+
+      },
+      [theme.breakpoints.up("desktop")]: {
+
+      }
     }
   }
 })
 
-theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme)
 
 export const CustomThemeProvider: VFC<CustomThemeProps> = ({ children }) => {
   return (

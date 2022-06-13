@@ -30,7 +30,7 @@ const Page: NextPage<PageProps> = () => {
   return wrapInLayout('top',
     <Box component="main">
       <Box component="section" sx={{ bgcolor: 'background.main'}}>
-        <Container maxWidth="lg">
+        <Container sx={{ maxWidth: 1200}}>
           <Grid container className="h-screen">
             <Grid item className="flex" sx={{
               flexGrow: 0,
@@ -125,28 +125,6 @@ const Page: NextPage<PageProps> = () => {
                     ログイン
                   </Button>
                 </div>
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              className="flex"
-              sx={{ maxHeight: "10%" }}
-            >
-              <div className="self-center text-center w-full">
-                <KeyboardDoubleArrowUpIcon
-                  sx={{
-                    color: "#fff",
-                    fontSize: "1.5rem"
-                  }}
-                />
-                <Typography
-                  variant="h5"
-                  component="p"
-                  className="text-white mb-4"
-                >
-                  このサイトについて詳しく
-                </Typography>
               </div>
             </Grid>
           </Grid>
