@@ -9,7 +9,6 @@ import {
   Typography,
 } from '@mui/material'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 import { Logo } from 'components/layouts/Logo'
@@ -109,7 +108,12 @@ const Page: NextPage<PageProps> = () => {
                     variant="outlined"
                     color="accent"
                     size="large"
-                    sx={{ bgcolor: "#fff" }}
+                    sx={{
+                      bgcolor: "#fff",
+                      ":hover": {
+                        bgcolor: "#fff",
+                      }
+                    }}
                     fullWidth
                   >
                     どんなイベントがあるか見る
