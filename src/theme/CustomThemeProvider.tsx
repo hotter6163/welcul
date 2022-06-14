@@ -45,6 +45,7 @@ theme = createTheme(theme, {
     background: {
       main: theme.palette.main.main,
       base: theme.palette.base.main,
+      accent: theme.palette.accent.main,
     },
     text: {
       accent: theme.palette.accent.main

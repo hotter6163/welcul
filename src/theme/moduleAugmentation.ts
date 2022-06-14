@@ -56,3 +56,9 @@ declare module '@mui/material/Button' {
     accent: true;
   }
 }
+
+declare module '@mui/material/TextField' {
+  interface TextFieldPropsColorOverrides {
+    accent: true;
+  }
+}

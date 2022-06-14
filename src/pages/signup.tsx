@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import {
   Button,
   Grid,
@@ -7,8 +8,8 @@ import {
   Typography
 } from '@mui/material'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { useAuthState } from 'react-firebase-hooks/auth'
 
+import 'theme/moduleAugmentation'
 import { auth } from 'app/firebase/app'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
@@ -16,14 +17,13 @@ const Page: NextPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const user = useAuthState(auth)
+  const router = useRouter()
 
-  useEffect(() => {
-    console.log(user)
-  }, [user])
-
-  const onSubmit = () => {
+  const onClickRegistration = () => {
     createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        router.push('/home')
+      })
   }
 
   return wrapInLayout('user',
@@ -34,7 +34,7 @@ const Page: NextPage = () => {
             ユーザー登録
           </Typography>
         </div>
-        <form action="#" onSubmit={onSubmit}>
+        <div>
           <div className="form-row">
             <TextField
               id="name-input"
@@ -67,13 +67,14 @@ const Page: NextPage = () => {
           <div className="form-row">
             <Button
               variant="contained"
-              size="large"
-              type="submit"
+              color="accent"
+              onClick={onClickRegistration}
+              sx={{ width: "8rem" }}
             >
               登録
             </Button>
           </div>
-        </form>
+        </div>
       </Grid>
     </Grid>
   )

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import {
   Button,
   Grid,
@@ -14,9 +15,13 @@ import { wrapInLayout } from 'components/layouts/wrapInLayout'
 const Page: NextPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
 
-  const onSubmit = () => {
+  const onClickLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        router.push('home')
+      })
   }
 
   return wrapInLayout('user',
@@ -27,7 +32,7 @@ const Page: NextPage = () => {
             ログイン
           </Typography>
         </div>
-        <form action="#" onSubmit={onSubmit}>
+        <div>
           <div className="form-row">
             <TextField
               id="email-input"
@@ -51,13 +56,14 @@ const Page: NextPage = () => {
           <div className="form-row">
             <Button
               variant="contained"
-              size="large"
-              type="submit"
+              color="accent"
+              onClick={onClickLogin}
+              sx={{ width: "8rem" }}
             >
               ログイン
             </Button>
           </div>
-        </form>
+        </div>
       </Grid>
     </Grid>
   )
