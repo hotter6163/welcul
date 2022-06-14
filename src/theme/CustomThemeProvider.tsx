@@ -141,6 +141,9 @@ theme = createTheme(theme, {
       fontFamily: 'Libre Baskerville',
       color: '#fff',
       fontSize: '1.5rem',
+    },
+    text: {
+      fontSize: "1rem"
     }
   }
 })

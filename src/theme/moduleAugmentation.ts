@@ -17,10 +17,12 @@ declare module '@mui/material/styles' {
   interface TypographyVariants {
     logoHeader: React.CSSProperties;
     logoTop: React.CSSProperties;
+    text: React.CSSProperties;
   }
   interface TypographyVariantsOptions {
     logoHeader?: React.CSSProperties;
     logoTop?: React.CSSProperties;
+    text?: React.CSSProperties;
   }
 
   // Breakpoint
@@ -48,6 +50,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     logoTop: true;
     logoHeader: true;
+    text: true;
   }
 }
 

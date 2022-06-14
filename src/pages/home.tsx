@@ -1,18 +1,52 @@
 import type { NextPage } from 'next'
-import { Button, Typography } from '@mui/material'
+import {
+  Grid,
+  Typography
+} from '@mui/material'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
+import 'theme/moduleAugmentation'
+import { auth } from 'app/firebase/app'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {
+  const [user] = useAuthState(auth)
+
   return wrapInLayout('user',
-    <>
-      <Typography variant="h1" gutterBottom>h1 variant</Typography>
-      <Typography variant="h2" gutterBottom>h2 variant</Typography>
-      <Typography variant="h3" gutterBottom>h3 variant</Typography>
-      <Typography variant="h4" gutterBottom>h4 variant</Typography>
-      <Typography variant="h5" gutterBottom>h5 variant</Typography>
-      <Typography variant="h6" gutterBottom>h6 variant</Typography>
-    </>
+    <Grid container sx={{ height: "80vh"}}>
+      <Grid item className="self-center w-screen text-center">
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+        >
+          ホーム
+        </Typography>
+        {user ? (
+          <>
+            <Typography
+              variant="text"
+              component="p"
+            >
+              displayName: {user.displayName ? user.displayName : "名前が登録されていません"}
+            </Typography>
+            <Typography
+              variant="text"
+              component="p"
+            >
+              Email: {user.email ? user.email : "メールが登録されていません"}
+            </Typography>
+          </>
+        ) : (
+          <Typography
+            variant="text"
+            component="p"
+          >
+            ログインを行ってください
+          </Typography>
+        )}
+      </Grid>
+    </Grid>
   )
 }
 
