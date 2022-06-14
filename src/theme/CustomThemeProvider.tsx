@@ -9,6 +9,8 @@ type CustomThemeProps = {
   children: ReactNode
 }
 
+// ページのイメージカラー・フォントの設定
+// ブレイクポイントの設定
 let theme = createTheme({
   palette: {
     main: {
@@ -37,6 +39,7 @@ let theme = createTheme({
   }
 })
 
+// イメージカラーに合わせた文字・背景色の作成
 theme = createTheme(theme, {
   palette: {
     background: {
@@ -46,7 +49,11 @@ theme = createTheme(theme, {
     text: {
       accent: theme.palette.accent.main
     }
-  },
+  }
+})
+
+// レスポンシブなtypographyの作成
+theme = createTheme(theme, {
   typography: {
     h1: {
       [theme.breakpoints.down('tablet')]: {
@@ -136,8 +143,6 @@ theme = createTheme(theme, {
     }
   }
 })
-
-theme = responsiveFontSizes(theme)
 
 export const CustomThemeProvider: VFC<CustomThemeProps> = ({ children }) => {
   return (
