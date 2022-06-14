@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-row {
+  margin-bottom: 1rem;
+  text-align: center;
+}
