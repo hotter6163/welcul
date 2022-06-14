@@ -1,6 +1,6 @@
 import type { ReactNode, VFC } from 'react'
 
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { orange, lightBlue } from '@mui/material/colors'
 
 import 'theme/moduleAugmentation'

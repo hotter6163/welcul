@@ -16,11 +16,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import { Logo } from './Logo'
+import { auth } from 'app/firebase/app'
 
 export const Header: VFC = () => {
   const [showMenu, setShowMenu] = useState(false)
+  const [user] = useAuthState(auth)
+
   return (
     <>
       <AppBar position="fixed" color="main" className="py-1">
@@ -68,14 +73,23 @@ export const Header: VFC = () => {
           <Divider />
           <Box component="nav">
             <List>
-              <Link href="/signin">
-                <ListItem disablePadding button>
+              {user ? (
+                <ListItem disablePadding button onClick={() => auth.signOut()}>
                   <ListItemIcon>
-                    <LoginIcon />
+                    <LogoutIcon />
                   </ListItemIcon>
-                  <ListItemText primary="ログイン" />
+                  <ListItemText primary="ログアウト" />
                 </ListItem>
-              </Link>
+              ) : (
+                <Link href="/signin">
+                  <ListItem disablePadding button>
+                    <ListItemIcon>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="ログイン" />
+                  </ListItem>
+                </Link>
+              )}
             </List>
           </Box>
         </Box>

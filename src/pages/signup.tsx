@@ -1,22 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import {
-  Box,
   Button,
   Grid,
   TextField,
   Typography
 } from '@mui/material'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
+import { auth } from 'app/firebase/app'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const user = useAuthState(auth)
+
+  useEffect(() => {
+    console.log(user)
+  }, [user])
 
   const onSubmit = () => {
-    console.log(name, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
   }
 
   return wrapInLayout('user',
