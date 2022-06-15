@@ -24,6 +24,12 @@ const Page: NextPage = () => {
         </Typography>
         {user ? (
           <>
+          <Typography
+            variant="text"
+            component="p"
+          >
+            uid: {user.uid}
+          </Typography>
             <Typography
               variant="text"
               component="p"
