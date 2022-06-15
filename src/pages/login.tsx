@@ -2,8 +2,14 @@ import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import {
+  useForm,
+  Controller,
+  SubmitHandler
+} from 'react-hook-form'
+import {
   Button,
   Grid,
+  Stack,
   TextField,
   Typography
 } from '@mui/material'
@@ -12,12 +18,16 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from 'app/firebase'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
+type FormInput = {
+  email: string
+  password: string
+}
+
 const Page: NextPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { control, handleSubmit } = useForm<FormInput>()
   const router = useRouter()
 
-  const onClickLogin = () => {
+  const onSubmit: SubmitHandler<FormInput> = ({ email, password}) => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         router.push('home')
@@ -33,36 +43,48 @@ const Page: NextPage = () => {
           </Typography>
         </div>
         <div>
-          <div className="form-row">
-            <TextField
-              id="email-input"
-              label="メール"
-              variant="standard"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-row">
-            <TextField
-              id="password-input"
-              label="パスワード"
-              variant="standard"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-row">
-            <Button
-              variant="contained"
-              color="accent"
-              onClick={onClickLogin}
-              sx={{ width: "8rem" }}
-            >
-              ログイン
-            </Button>
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={3} sx={{ width: "60%", mx: "auto" }} >
+              <Controller
+                name="email"
+                control={control}
+                defaultValue={""}
+                render={({ field }) => (
+                  <TextField
+                    id="email"
+                    label="メールアドレス"
+                    type="email"
+                    variant="standard"
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                defaultValue={""}
+                render={({ field }) => (
+                  <TextField
+                    id="password"
+                    label="パスワード"
+                    type="password"
+                    variant="standard"
+                    {...field}
+                  />
+                )}
+              />
+              <div className="text-center">
+                <Button
+                  variant="contained"
+                  color="accent"
+                  type="submit"
+                  sx={{ width: "8rem" }}
+                >
+                  ログイン
+                </Button>
+              </div>
+            </Stack>
+          </form>
         </div>
       </Grid>
     </Grid>
