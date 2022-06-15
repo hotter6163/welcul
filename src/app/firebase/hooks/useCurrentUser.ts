@@ -21,6 +21,7 @@ type ReturnValueType = {
   error: boolean
 }
 
+// useContextで毎回auth、dbにアクセスするのをなくした方が良いかも
 export const useCurrentUser = (auth: Auth): ReturnValueType => {
   // 以下のエラーが発生するため、useSWRのkeyの書き方が微妙
   // Rendered more hooks than during the previous render.

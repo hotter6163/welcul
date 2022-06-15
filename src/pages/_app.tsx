@@ -1,13 +1,33 @@
+import { useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import CssBaseline from '@mui/material/CssBaseline'
 
 import "@fontsource/noto-sans-jp"
 import 'styles/globals.scss'
 
+import { auth, useCurrentUser } from 'app/firebase'
+
 import { CustomThemeProvider } from 'theme/CustomThemeProvider'
 
+const pagesNotLogin = ['/', '/signup', '/login']
+
 function App({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+  const { user } = useCurrentUser(auth)
+
+  // ログイン状態に応じたリダイレクト処理
+  // 一回そのページが表示されるのをなくしたいが、、、
+  useEffect(() => {
+    console.log(pagesNotLogin.includes(router.pathname), router.pathname, user)
+    if (pagesNotLogin.includes(router.pathname)) {
+      if (user) {
+        router.replace('/home')
+      }
+    }
+  }, [user])
+
   return (
     <>
       <CssBaseline />

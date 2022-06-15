@@ -20,11 +20,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import { Logo } from './Logo'
-import { auth } from 'app/firebase'
+import { auth, useCurrentUser } from 'app/firebase'
 
 export const Header: VFC = () => {
   const [showMenu, setShowMenu] = useState(false)
-  const [user] = useAuthState(auth)
+  const { user } = useCurrentUser(auth)
 
   return (
     <>
@@ -81,7 +81,7 @@ export const Header: VFC = () => {
                   <ListItemText primary="ログアウト" />
                 </ListItem>
               ) : (
-                <Link href="/signin">
+                <Link href="/login">
                   <ListItem disablePadding button>
                     <ListItemIcon>
                       <LoginIcon />

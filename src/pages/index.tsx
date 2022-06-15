@@ -126,7 +126,7 @@ const Page: NextPage<PageProps> = () => {
                   </Link>
                 </div>
                 <div className="text-center my-4">
-                  <Link href="/signin">
+                  <Link href="/login">
                     <Button
                       variant="contained"
                       color="secondary"
