@@ -7,6 +7,7 @@ import {
   SubmitHandler
 } from 'react-hook-form'
 import {
+  Alert,
   Button,
   Grid,
   Stack,
@@ -24,13 +25,18 @@ type FormInput = {
 }
 
 const Page: NextPage = () => {
-  const { control, handleSubmit } = useForm<FormInput>()
+  const { control, handleSubmit, setValue } = useForm<FormInput>()
   const router = useRouter()
+  const [isError, setIsError] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<FormInput> = ({ email, password}) => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         router.push('home')
+      })
+      .catch(() => {
+        setValue('password', '')
+        setIsError(true)
       })
   }
 
@@ -42,9 +48,16 @@ const Page: NextPage = () => {
             ログイン
           </Typography>
         </div>
+        {isError && (
+          <div className="mb-6">
+            <Alert severity="error">
+              ログイン情報が間違っています。
+            </Alert>
+          </div>
+        )}
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={3} sx={{ width: "60%", mx: "auto" }} >
+            <Stack spacing={3} sx={{ width: "70%", mx: "auto" }} >
               <Controller
                 name="email"
                 control={control}
