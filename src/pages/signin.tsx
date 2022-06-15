@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
-import { auth } from 'app/firebase/app'
+import { auth } from 'app/firebase'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {

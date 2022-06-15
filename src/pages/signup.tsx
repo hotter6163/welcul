@@ -10,7 +10,7 @@ import {
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 import 'theme/moduleAugmentation'
-import { auth } from 'app/firebase/app'
+import { auth } from 'app/firebase'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {

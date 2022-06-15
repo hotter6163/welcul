@@ -16,7 +16,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>新歓情報サイト</title>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap" 
+          href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap"
         />
       </Head>
       <CustomThemeProvider>

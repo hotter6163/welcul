@@ -6,11 +6,11 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import 'theme/moduleAugmentation'
-import { auth } from 'app/firebase/app'
+import { auth, useCurrentUser } from 'app/firebase'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
 const Page: NextPage = () => {
-  const [user] = useAuthState(auth)
+  const { user } = useCurrentUser(auth)
 
   return wrapInLayout('user',
     <Grid container sx={{ height: "80vh"}}>

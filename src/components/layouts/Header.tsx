@@ -20,7 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import { Logo } from './Logo'
-import { auth } from 'app/firebase/app'
+import { auth } from 'app/firebase'
 
 export const Header: VFC = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -30,7 +30,7 @@ export const Header: VFC = () => {
     <>
       <AppBar position="fixed" color="main" className="py-1">
         <Toolbar className="justify-between">
-          <Link href="/">
+          <Link href="/home">
             <a className="no-underline ml-3" >
               <Logo />
             </a>
