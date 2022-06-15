@@ -20,7 +20,6 @@ function App({ Component, pageProps }: AppProps) {
   // ログイン状態に応じたリダイレクト処理
   // 一回そのページが表示されるのをなくしたいが、、、
   useEffect(() => {
-    console.log(pagesNotLogin.includes(router.pathname), router.pathname, user)
     if (pagesNotLogin.includes(router.pathname)) {
       if (user) {
         router.replace('/home')
