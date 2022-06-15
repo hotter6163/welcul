@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import {
   useForm,
   Controller,
@@ -43,62 +44,69 @@ const Page: NextPage = () => {
   return wrapInLayout('user',
     <Grid container sx={{ height: "80vh"}}>
       <Grid item className="self-center w-screen">
-        <div className="form-row">
-          <Typography variant="h2" component="h1">
-            ログイン
-          </Typography>
-        </div>
-        {isError && (
-          <div className="mb-6">
-            <Alert severity="error">
-              ログイン情報が間違っています。
-            </Alert>
+        <Stack spacing={3}>
+          <div className="text-center">
+            <Typography variant="h2" component="h1">
+              ログイン
+            </Typography>
           </div>
-        )}
-        <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={3} sx={{ width: "70%", mx: "auto" }} >
-              <Controller
-                name="email"
-                control={control}
-                defaultValue={""}
-                render={({ field }) => (
-                  <TextField
-                    id="email"
-                    label="メールアドレス"
-                    type="email"
-                    variant="standard"
-                    {...field}
-                  />
-                )}
-              />
-              <Controller
-                name="password"
-                control={control}
-                defaultValue={""}
-                render={({ field }) => (
-                  <TextField
-                    id="password"
-                    label="パスワード"
-                    type="password"
-                    variant="standard"
-                    {...field}
-                  />
-                )}
-              />
-              <div className="text-center">
-                <Button
-                  variant="contained"
-                  color="accent"
-                  type="submit"
-                  sx={{ width: "8rem" }}
-                >
-                  ログイン
-                </Button>
-              </div>
-            </Stack>
-          </form>
-        </div>
+          {isError && (
+            <div>
+              <Alert severity="error">
+                ログイン情報が間違っています。
+              </Alert>
+            </div>
+          )}
+          <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Stack spacing={3} sx={{ width: "70%", mx: "auto" }} >
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="email"
+                      label="メールアドレス"
+                      type="email"
+                      variant="standard"
+                      {...field}
+                    />
+                  )}
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="password"
+                      label="パスワード"
+                      type="password"
+                      variant="standard"
+                      {...field}
+                    />
+                  )}
+                />
+                <div className="text-center">
+                  <Button
+                    variant="contained"
+                    color="accent"
+                    type="submit"
+                    sx={{ width: "8rem" }}
+                  >
+                    ログイン
+                  </Button>
+                </div>
+              </Stack>
+            </form>
+          </div>
+          <div className="text-center">
+            <Link href="/signup">
+              <a>アカウント登録を行う</a>
+            </Link>
+          </div>
+        </Stack>
       </Grid>
     </Grid>
   )

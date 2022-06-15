@@ -103,7 +103,7 @@ const Page: NextPage<PageProps> = () => {
                       size="large"
                       fullWidth
                     >
-                      ユーザー登録して使い始める
+                      アカウント登録をして使い始める
                     </Button>
                   </Link>
                 </div>
