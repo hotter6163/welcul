@@ -22,20 +22,22 @@ type ReturnValueType = {
 }
 
 export const useCurrentUser = (auth: Auth): ReturnValueType => {
-  const [authUser, loading] = useAuthState(auth)
-  // auth.currentUserが存在しないとき
+  // 以下のエラーが発生するため、useSWRのkeyの書き方が微妙
+  // Rendered more hooks than during the previous render.
+  const [authUser] = useAuthState(auth)
+  let user: CurrentUserType
+  const { data } = useSWR(authUser ? authUser.uid : '', async (uid) => {
+    return getDoc(doc(db, 'users', uid))
+  })
+
+  // authUserが存在しない
   if (!authUser) {
     return {
-      user: authUser,
-      loading,
+      user: null,
+      loading: false,
       error: false
     }
   }
-
-  let user: CurrentUserType
-  const { data } = useSWR(authUser.uid, async (uid) => {
-    return getDoc(doc(db, 'users', uid))
-  })
 
   // firestoreからデータを取得中の場合
   if (!data) {
