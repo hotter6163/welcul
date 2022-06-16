@@ -1,83 +1,294 @@
-import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import {
+  useForm,
+  Controller,
+  SubmitHandler
+} from 'react-hook-form'
 import {
   Button,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
   TextField,
   Typography
 } from '@mui/material'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  collection, getDocs
+} from 'firebase/firestore'
 
 import 'theme/moduleAugmentation'
-import { auth } from 'app/firebase'
+import { auth, db } from 'app/firebase'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
-const Page: NextPage = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const router = useRouter()
+type FormData = {
+  firstName: string
+  lastName: string
+  nickName: string
+  universityId: string
+  facultyId: string
+  departmentId: string
+  email: string
+  password: string
+}
 
-  const onClickRegistration = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        router.push('/home')
-      })
+// 同じような処理を複数記述しているから、めっちゃ冗長な記述になっている
+// リファクタリング等行う必要があると思う
+const Page: NextPage = () => {
+  const { control, handleSubmit, watch } = useForm<FormData>()
+  const watchUniversityId = watch('universityId')
+  const watchFacultyId = watch('facultyId')
+
+  const { data: universityData } = useSWR('universities', async (key) => {
+    return getDocs(collection(db, key))
+  })
+  // ここ以下の処理はuseEffectで行った方が良いかも？
+  const universities: { [key: string]: UniversityType } = {}
+  const selectUniversityItems: JSX.Element[] = []
+  universityData?.docs.forEach((doc) => {
+    const data = doc.data()
+    assertIsUniversity(data)
+    universities[doc.id] = {
+      ...data
+    }
+    selectUniversityItems.push(<MenuItem key={doc.id} value={doc.id}>{data.name}</MenuItem>)
+  })
+
+  const { data: facultyData } = useSWR(`/${watchUniversityId}`, async (pass) => {
+    const keys = pass.split('/')
+    return getDocs(collection(db, 'universities', keys[1], 'faculties'))
+  })
+  // ここ以下の処理はuseEffectで行った方が良いかも？
+  const faculties: { [key: string]: FacultyType } = {}
+  const selectFacultyItems: JSX.Element[] = []
+  facultyData?.docs.forEach((doc) => {
+    const data = doc.data()
+    assertIsFaculty(data)
+    faculties[doc.id] = {
+      ...data
+    }
+    selectFacultyItems.push(<MenuItem key={doc.id} value={doc.id}>{data.name}</MenuItem>)
+  })
+
+  const { data: departmentData,  } = useSWR(`/${watchUniversityId}/${watchFacultyId}`, async (pass) => {
+    const keys = pass.split('/')
+    return getDocs(collection(db, 'universities', keys[1], 'faculties', keys[2], 'departments'))
+  })
+  // ここ以下の処理はuseEffectで行った方が良いかも？
+  const departments: { [key: string]: DepartmentType } = {}
+  const selectDepartmentItems: JSX.Element[] = []
+  departmentData?.docs.forEach((doc) => {
+    const data = doc.data()
+    assertIsDepartment(data)
+    departments[doc.id] = {
+      ...data
+    }
+    selectDepartmentItems.push(<MenuItem key={doc.id} value={doc.id}>{data.name}</MenuItem>)
+  })
+
+  const onSubmit: SubmitHandler<FormData> = ({
+    firstName,
+    lastName,
+    nickName,
+    universityId,
+    facultyId,
+    departmentId,
+    email,
+    password
+  }) => {
+    console.log(universityId, facultyId, departmentId)
   }
 
   return wrapInLayout('user',
-    <Grid container sx={{ height: "80vh"}}>
+    <Grid container>
       <Grid item className="self-center w-screen">
-        <div className="form-row">
-          <Typography variant="h2" component="h1">
-            ユーザー登録
-          </Typography>
-        </div>
-        <div>
+        <Stack spacing={3}>
           <div className="form-row">
-            <TextField
-              id="name-input"
-              label="名前"
-              variant="standard"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Typography variant="h2" component="h1">
+              ユーザー登録
+            </Typography>
           </div>
-          <div className="form-row">
-            <TextField
-              id="email-input"
-              label="メール"
-              variant="standard"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Stack spacing={3} sx={{ width: "70%", mx: "auto" }}>
+                <Controller
+                  name="lastName"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="lastName"
+                      label="苗字"
+                      type="text"
+                      variant="standard"
+                      {...field}
+                    />
+                  )}
+                />
+                <Controller
+                  name="firstName"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="firstName"
+                      label="名前"
+                      type="text"
+                      variant="standard"
+                      {...field}
+                    />
+                  )}
+                />
+                <Controller
+                  name="nickName"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="nickName"
+                      label="ニックネーム"
+                      type="text"
+                      variant="standard"
+                      {...field}
+                    />
+                  )}
+                />
+                <Controller
+                  name="universityId"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <FormControl variant="standard">
+                      <InputLabel id="university">大学</InputLabel>
+                      <Select
+                        labelId="university"
+                        id="university"
+                        {...field}
+                      >
+                        {selectUniversityItems}
+                      </Select>
+                    </FormControl>
+                  )}
+                />
+                {watchUniversityId && (
+                  <Controller
+                    name="facultyId"
+                    control={control}
+                    defaultValue={""}
+                    render={({ field }) => (
+                      <FormControl variant="standard">
+                        <InputLabel id="faculty">学部</InputLabel>
+                        <Select
+                          labelId="faculty"
+                          id="faculty"
+                          {...field}
+                        >
+                          {selectFacultyItems}
+                        </Select>
+                      </FormControl>
+                    )}
+                  />
+                )}
+                {watchFacultyId && faculties[watchFacultyId].requireDepartment && (
+                  <Controller
+                    name="departmentId"
+                    control={control}
+                    defaultValue={""}
+                    render={({ field }) => (
+                      <FormControl variant="standard">
+                        <InputLabel id="department">学科</InputLabel>
+                        <Select
+                          labelId="department"
+                          id="department"
+                          {...field}
+                        >
+                          {selectDepartmentItems}
+                        </Select>
+                      </FormControl>
+                    )}
+                  />
+                )}
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="email"
+                      label="メールアドレス"
+                      type="email"
+                      variant="standard"
+                      autoComplete="email"
+                      {...field}
+                    />
+                  )}
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue={""}
+                  render={({ field }) => (
+                    <TextField
+                      id="password"
+                      label="パスワード"
+                      type="password"
+                      variant="standard"
+                      autoComplete="current-password"
+                      {...field}
+                    />
+                  )}
+                />
+                <div className="text-center">
+                  <Button
+                    variant="contained"
+                    color="accent"
+                    type="submit"
+                    sx={{ width: "8rem" }}
+                  >
+                    登録
+                  </Button>
+                </div>
+              </Stack>
+            </form>
           </div>
-          <div className="form-row">
-            <TextField
-              id="password-input"
-              label="パスワード"
-              variant="standard"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-row">
-            <Button
-              variant="contained"
-              color="accent"
-              onClick={onClickRegistration}
-              sx={{ width: "8rem" }}
-            >
-              登録
-            </Button>
-          </div>
-        </div>
+        </Stack>
       </Grid>
     </Grid>
   )
 }
 
 export default Page
+
+type UniversityType = {
+  name: string
+}
+
+// とりあえず放置
+function assertIsUniversity(unknownData: any): asserts unknownData is UniversityType {
+
+}
+
+type FacultyType = {
+  name: string
+  requireDepartment: boolean
+}
+
+// とりあえず放置
+function assertIsFaculty(unknownData: any): asserts unknownData is FacultyType {
+
+}
+
+
+type DepartmentType = {
+  name: string
+}
+
+// とりあえず放置
+function assertIsDepartment(unknownData: any): asserts unknownData is DepartmentType {
+
+}

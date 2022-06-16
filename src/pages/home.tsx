@@ -3,7 +3,6 @@ import {
   Grid,
   Typography
 } from '@mui/material'
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 import 'theme/moduleAugmentation'
 import { auth, useCurrentUser } from 'app/firebase'

@@ -20,17 +20,17 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from 'app/firebase'
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
 
-type FormInput = {
+type FormData = {
   email: string
   password: string
 }
 
 const Page: NextPage = () => {
-  const { control, handleSubmit, setValue } = useForm<FormInput>()
+  const { control, handleSubmit, setValue } = useForm<FormData>()
   const router = useRouter()
   const [isError, setIsError] = useState<boolean>(false)
 
-  const onSubmit: SubmitHandler<FormInput> = ({ email, password}) => {
+  const onSubmit: SubmitHandler<FormData> = ({ email, password}) => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         router.push('home')
@@ -59,7 +59,7 @@ const Page: NextPage = () => {
           )}
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Stack spacing={3} sx={{ width: "70%", mx: "auto" }} >
+              <Stack spacing={3} sx={{ width: "70%", mx: "auto" }}>
                 <Controller
                   name="email"
                   control={control}
@@ -70,6 +70,7 @@ const Page: NextPage = () => {
                       label="メールアドレス"
                       type="email"
                       variant="standard"
+                      autoComplete="email"
                       {...field}
                     />
                   )}
@@ -84,6 +85,7 @@ const Page: NextPage = () => {
                       label="パスワード"
                       type="password"
                       variant="standard"
+                      autoComplete="current-password"
                       {...field}
                     />
                   )}
