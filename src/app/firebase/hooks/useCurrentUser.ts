@@ -3,7 +3,7 @@ import { Auth } from "firebase/auth";
 import { doc, getDoc } from 'firebase/firestore'
 import useSWR from 'swr'
 
-import { auth, db } from '../app'
+import { db } from '../app'
 
 type CurrentUserType = {
   uid: string

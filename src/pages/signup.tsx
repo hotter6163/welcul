@@ -19,7 +19,10 @@ import {
 } from '@mui/material'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import {
-  collection, getDocs
+  collection,
+  doc,
+  getDocs,
+  setDoc
 } from 'firebase/firestore'
 
 import 'theme/moduleAugmentation'
@@ -40,6 +43,7 @@ type FormData = {
 // 同じような処理を複数記述しているから、めっちゃ冗長な記述になっている
 // リファクタリング等行う必要があると思う
 const Page: NextPage = () => {
+  const router = useRouter()
   const { control, handleSubmit, watch } = useForm<FormData>()
   const watchUniversityId = watch('universityId')
   const watchFacultyId = watch('facultyId')
@@ -101,7 +105,24 @@ const Page: NextPage = () => {
     email,
     password
   }) => {
-    console.log(universityId, facultyId, departmentId)
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user
+        setDoc(doc(db, 'users', user.uid), {
+          firstName,
+          lastName,
+          nickName,
+          university: universities[universityId].name,
+          faculty: faculties[facultyId].name,
+          department: departments[departmentId].name,
+        })
+          .then(() => {
+            router.push('/home')
+          })
+          .catch(async () => {
+            await user.delete()
+          })
+      })
   }
 
   return wrapInLayout('user',
