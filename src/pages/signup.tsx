@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import {
   useForm,
+  useWatch,
   Controller,
   SubmitHandler
 } from 'react-hook-form'
@@ -40,13 +41,26 @@ type FormData = {
   password: string
 }
 
+type UniversityType = {
+  name: string
+}
+
+type FacultyType = {
+  name: string
+  requireDepartment: boolean
+}
+
+type DepartmentType = {
+  name: string
+}
+
 // 同じような処理を複数記述しているから、めっちゃ冗長な記述になっている
 // リファクタリング等行う必要があると思う
 const Page: NextPage = () => {
   const router = useRouter()
-  const { control, handleSubmit, watch } = useForm<FormData>()
-  const watchUniversityId = watch('universityId')
-  const watchFacultyId = watch('facultyId')
+  const { control, handleSubmit, setValue } = useForm<FormData>()
+  const watchUniversityId = useWatch({ control, name: 'universityId' })
+  const watchFacultyId = useWatch({ control, name: 'facultyId' })
 
   const { data: universityData } = useSWR('universities', async (key) => {
     return getDocs(collection(db, key))
@@ -189,7 +203,15 @@ const Page: NextPage = () => {
                       <Select
                         labelId="university"
                         id="university"
-                        {...field}
+                        onBlur={field.onBlur}
+                        value={field.value}
+                        name={field.name}
+                        ref={field.ref}
+                        onChange={(e) => {
+                          field.onChange(e)
+                          setValue('facultyId', '')
+                          setValue('departmentId', '')
+                        }}
                       >
                         {selectUniversityItems}
                       </Select>
@@ -207,7 +229,14 @@ const Page: NextPage = () => {
                         <Select
                           labelId="faculty"
                           id="faculty"
-                          {...field}
+                          onBlur={field.onBlur}
+                          value={field.value}
+                          name={field.name}
+                          ref={field.ref}
+                          onChange={(e) => {
+                            field.onChange(e)
+                            setValue('departmentId', '')
+                          }}
                         >
                           {selectFacultyItems}
                         </Select>
@@ -285,30 +314,15 @@ const Page: NextPage = () => {
 
 export default Page
 
-type UniversityType = {
-  name: string
-}
-
 // とりあえず放置
 function assertIsUniversity(unknownData: any): asserts unknownData is UniversityType {
 
-}
-
-type FacultyType = {
-  name: string
-  requireDepartment: boolean
 }
 
 // とりあえず放置
 function assertIsFaculty(unknownData: any): asserts unknownData is FacultyType {
 
 }
-
-
-type DepartmentType = {
-  name: string
-}
-
 // とりあえず放置
 function assertIsDepartment(unknownData: any): asserts unknownData is DepartmentType {
 
