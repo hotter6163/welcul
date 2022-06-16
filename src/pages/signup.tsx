@@ -316,14 +316,24 @@ export default Page
 
 // とりあえず放置
 function assertIsUniversity(unknownData: any): asserts unknownData is UniversityType {
+  if (unknownData === null) throw new Error(`assertIsUniversity: unknownDataはnullです。`)
+  if (typeof unknownData !== 'object') throw new Error(`assertIsUniversity: unknownDataはobjectではありません。`)
 
+  if (typeof unknownData.name !== 'string') throw new Error(`assertIsUniversity: unknownDataのnameの型が正しくありません`)
 }
 
 // とりあえず放置
 function assertIsFaculty(unknownData: any): asserts unknownData is FacultyType {
+  if (unknownData === null) throw new Error(`assertIsFaculty: unknownDataはnullです。`)
+  if (typeof unknownData !== 'object') throw new Error(`assertIsFaculty: unknownDataはobjectではありません。`)
 
+  if (typeof unknownData.name !== 'string') throw new Error(`assertIsFaculty: unknownDataのnameの型が正しくありません`)
+  if (typeof unknownData.requireDepartment !== 'boolean') throw new Error(`assertIsFaculty: unknownDataのrequireDepartmentの型が正しくありません`)
 }
 // とりあえず放置
 function assertIsDepartment(unknownData: any): asserts unknownData is DepartmentType {
+  if (unknownData === null) throw new Error(`assertIsDepartment: unknownDataはnullです。`)
+  if (typeof unknownData !== 'object') throw new Error(`assertIsDepartment: unknownDataはobjectではありません。`)
 
+  if (typeof unknownData.name !== 'string') throw new Error(`assertIsDepartment: unknownDataのnameの型が正しくありません`)
 }
