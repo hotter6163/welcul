@@ -74,6 +74,7 @@ const Page: NextPage = () => {
   const watchLastName = useWatch({ control, name: 'lastName' })
   const watchNickName = useWatch({ control, name: 'nickName' })
 
+  // 大学一覧を取得した後の処理
   const { data: universityData } = useSWR('universities', async (key) => {
     return getDocs(collection(db, key))
   })
@@ -88,6 +89,7 @@ const Page: NextPage = () => {
     selectUniversityItems.push(<MenuItem key={doc.id} value={doc.id}>{data.name}</MenuItem>)
   })
 
+  // 学部一覧を取得した後の処理
   const { data: facultyData } = useSWR(`/${watchUniversityId}`, async (pass) => {
     const keys = pass.split('/')
     return getDocs(collection(db, 'universities', keys[1], 'faculties'))
@@ -103,6 +105,7 @@ const Page: NextPage = () => {
     selectFacultyItems.push(<MenuItem key={doc.id} value={doc.id}>{data.name}</MenuItem>)
   })
 
+  // 学科一覧を取得した後の処理
   const { data: departmentData } = useSWR(`/${watchUniversityId}/${watchFacultyId}`, async (pass) => {
     const keys = pass.split('/')
     return getDocs(collection(db, 'universities', keys[1], 'faculties', keys[2], 'departments'))
@@ -446,7 +449,7 @@ const Page: NextPage = () => {
 
 export default Page
 
-// とりあえず放置
+// 大学のアサーション関数
 function assertIsUniversity(unknownData: any): asserts unknownData is UniversityType {
   if (unknownData === null) throw new Error(`assertIsUniversity: unknownDataはnullです。`)
   if (typeof unknownData !== 'object') throw new Error(`assertIsUniversity: unknownDataはobjectではありません。`)
@@ -454,7 +457,7 @@ function assertIsUniversity(unknownData: any): asserts unknownData is University
   if (typeof unknownData.name !== 'string') throw new Error(`assertIsUniversity: unknownDataのnameの型が正しくありません`)
 }
 
-// とりあえず放置
+// 学部のアサーション関数
 function assertIsFaculty(unknownData: any): asserts unknownData is FacultyType {
   if (unknownData === null) throw new Error(`assertIsFaculty: unknownDataはnullです。`)
   if (typeof unknownData !== 'object') throw new Error(`assertIsFaculty: unknownDataはobjectではありません。`)
@@ -462,7 +465,8 @@ function assertIsFaculty(unknownData: any): asserts unknownData is FacultyType {
   if (typeof unknownData.name !== 'string') throw new Error(`assertIsFaculty: unknownDataのnameの型が正しくありません`)
   if (typeof unknownData.requireDepartment !== 'boolean') throw new Error(`assertIsFaculty: unknownDataのrequireDepartmentの型が正しくありません`)
 }
-// とりあえず放置
+
+// 学科のアサーション関数
 function assertIsDepartment(unknownData: any): asserts unknownData is DepartmentType {
   if (unknownData === null) throw new Error(`assertIsDepartment: unknownDataはnullです。`)
   if (typeof unknownData !== 'object') throw new Error(`assertIsDepartment: unknownDataはobjectではありません。`)
