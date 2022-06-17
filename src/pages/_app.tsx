@@ -8,7 +8,6 @@ import "@fontsource/noto-sans-jp"
 import 'styles/globals.scss'
 
 import { auth, useCurrentUser } from 'app/firebase'
-
 import { CustomThemeProvider } from 'theme/CustomThemeProvider'
 
 const pagesNotLogin = ['/', '/signup', '/login']
@@ -20,6 +19,7 @@ function App({ Component, pageProps }: AppProps) {
   // ログイン状態に応じたリダイレクト処理
   // 一回そのページが表示されるのをなくしたいが、、、
   useEffect(() => {
+    console.log(user)
     if (pagesNotLogin.includes(router.pathname)) {
       if (user) {
         router.replace('/home')
