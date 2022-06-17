@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
@@ -8,7 +9,6 @@ import {
   SubmitHandler
 } from 'react-hook-form'
 import {
-  Button,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -23,6 +23,7 @@ import {
   TextField,
   Typography
 } from '@mui/material'
+import LoadingButton from '@mui/lab/LoadingButton'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import {
   collection,
@@ -63,6 +64,7 @@ type DepartmentType = {
 // 同じような処理を複数記述しているから、めっちゃ冗長になっている
 // リファクタリング等行う必要があると思う
 const Page: NextPage = () => {
+  const [registering, setRegistering] = useState(false)
   const router = useRouter()
   const { control, handleSubmit, setValue } = useForm<FormData>()
   const watchUniversityId = useWatch({ control, name: 'universityId' })
@@ -127,6 +129,7 @@ const Page: NextPage = () => {
     email,
     password
   }) => {
+    setRegistering(true)
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user
@@ -144,7 +147,11 @@ const Page: NextPage = () => {
           })
           .catch(async () => {
             await user.delete()
+            setRegistering(false)
           })
+      })
+      .catch(() => {
+        setRegistering(false)
       })
   }
 
@@ -417,14 +424,16 @@ const Page: NextPage = () => {
                   )}
                 />
                 <div className="text-center">
-                  <Button
+                  <LoadingButton
                     variant="contained"
                     color="accent"
                     type="submit"
+                    loading={registering}
+                    loadingIndicator="登録中..."
                     sx={{ width: "8rem" }}
                   >
                     登録
-                  </Button>
+                  </LoadingButton>
                 </div>
               </Stack>
             </form>
