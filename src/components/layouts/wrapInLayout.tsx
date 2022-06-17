@@ -17,7 +17,7 @@ export const wrapInLayout = (
       pageWithLayout = (
         <>
           <Header />
-          <Container maxWidth="desktop" component="main" className="mt-20 px-4">
+          <Container maxWidth="desktop" component="main" className="mt-24 px-4">
             {WrappedPage}
           </Container>
         </>

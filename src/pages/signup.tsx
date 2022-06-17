@@ -10,9 +10,14 @@ import {
 import {
   Button,
   FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
   Grid,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
@@ -34,6 +39,7 @@ type FormData = {
   firstName: string
   lastName: string
   nickName: string
+  displayNameFormat: 'firstname' | 'lastname' | 'fullname' | 'nickname'
   universityId: string
   facultyId: string
   departmentId: string
@@ -54,18 +60,21 @@ type DepartmentType = {
   name: string
 }
 
-// 同じような処理を複数記述しているから、めっちゃ冗長な記述になっている
+// 同じような処理を複数記述しているから、めっちゃ冗長になっている
 // リファクタリング等行う必要があると思う
 const Page: NextPage = () => {
   const router = useRouter()
   const { control, handleSubmit, setValue } = useForm<FormData>()
   const watchUniversityId = useWatch({ control, name: 'universityId' })
   const watchFacultyId = useWatch({ control, name: 'facultyId' })
+  const watchDisplayNameFotmat = useWatch({ control, name: 'displayNameFormat' })
+  const watchFirstName = useWatch({ control, name: 'firstName' })
+  const watchLastName = useWatch({ control, name: 'lastName' })
+  const watchNickName = useWatch({ control, name: 'nickName' })
 
   const { data: universityData } = useSWR('universities', async (key) => {
     return getDocs(collection(db, key))
   })
-  // ここ以下の処理はuseEffectで行った方が良いかも？
   const universities: { [key: string]: UniversityType } = {}
   const selectUniversityItems: JSX.Element[] = []
   universityData?.docs.forEach((doc) => {
@@ -81,7 +90,6 @@ const Page: NextPage = () => {
     const keys = pass.split('/')
     return getDocs(collection(db, 'universities', keys[1], 'faculties'))
   })
-  // ここ以下の処理はuseEffectで行った方が良いかも？
   const faculties: { [key: string]: FacultyType } = {}
   const selectFacultyItems: JSX.Element[] = []
   facultyData?.docs.forEach((doc) => {
@@ -93,11 +101,10 @@ const Page: NextPage = () => {
     selectFacultyItems.push(<MenuItem key={doc.id} value={doc.id}>{data.name}</MenuItem>)
   })
 
-  const { data: departmentData,  } = useSWR(`/${watchUniversityId}/${watchFacultyId}`, async (pass) => {
+  const { data: departmentData } = useSWR(`/${watchUniversityId}/${watchFacultyId}`, async (pass) => {
     const keys = pass.split('/')
     return getDocs(collection(db, 'universities', keys[1], 'faculties', keys[2], 'departments'))
   })
-  // ここ以下の処理はuseEffectで行った方が良いかも？
   const departments: { [key: string]: DepartmentType } = {}
   const selectDepartmentItems: JSX.Element[] = []
   departmentData?.docs.forEach((doc) => {
@@ -113,6 +120,7 @@ const Page: NextPage = () => {
     firstName,
     lastName,
     nickName,
+    displayNameFormat,
     universityId,
     facultyId,
     departmentId,
@@ -126,6 +134,7 @@ const Page: NextPage = () => {
           firstName,
           lastName,
           nickName,
+          displayNameFormat,
           university: universities[universityId].name,
           faculty: faculties[facultyId].name,
           department: departments[departmentId].name,
@@ -142,7 +151,7 @@ const Page: NextPage = () => {
   return wrapInLayout('user',
     <Grid container>
       <Grid item className="self-center w-screen">
-        <Stack spacing={3}>
+        <Stack spacing={3} sx={{ mb: '30vh'}}>
           <div className="form-row">
             <Typography variant="h2" component="h1">
               ユーザー登録
@@ -155,12 +164,18 @@ const Page: NextPage = () => {
                   name="lastName"
                   control={control}
                   defaultValue={""}
-                  render={({ field }) => (
+                  rules={{
+                    required: { value: true, message: '苗字を入力したください' },
+                  }}
+                  render={({ field, fieldState: { error } }) => (
                     <TextField
+                      required
                       id="lastName"
                       label="苗字"
                       type="text"
                       variant="standard"
+                      error={!!error}
+                      helperText={error?.message}
                       {...field}
                     />
                   )}
@@ -169,12 +184,18 @@ const Page: NextPage = () => {
                   name="firstName"
                   control={control}
                   defaultValue={""}
-                  render={({ field }) => (
+                  rules={{
+                    required: { value: true, message: '名前を入力したください。' },
+                  }}
+                  render={({ field, fieldState: { error } }) => (
                     <TextField
+                      required
                       id="firstName"
                       label="名前"
                       type="text"
                       variant="standard"
+                      error={!!error}
+                      helperText={error?.message}
                       {...field}
                     />
                   )}
@@ -183,22 +204,94 @@ const Page: NextPage = () => {
                   name="nickName"
                   control={control}
                   defaultValue={""}
-                  render={({ field }) => (
+                  rules={{
+                    required: { value: watchDisplayNameFotmat === "nickname", message: "表示名がニックネームの場合、入力が必要です。"},
+                    maxLength: { value: 20, message: 'ニックネームは20文字以下です。'},
+                  }}
+                  render={({ field, fieldState: { error } }) => (
                     <TextField
+                      required={watchDisplayNameFotmat === "nickname"}
                       id="nickName"
                       label="ニックネーム"
                       type="text"
                       variant="standard"
+                      error={!!error}
+                      helperText={error?.message}
                       {...field}
                     />
+                  )}
+                />
+                <Controller
+                  name="displayNameFormat"
+                  control={control}
+                  defaultValue="fullname"
+                  rules={{
+                    required: { value: true, message: '表示名を選択してください。' },
+                  }}
+                  render={({ field, fieldState: { error } }) => (
+                    <FormControl
+                      required
+                      error={!!error}
+                    >
+                      <FormLabel id="display-name-format">表示名</FormLabel>
+                      <div className="text-center mt-2">
+                        {(() => {
+                          switch (watchDisplayNameFotmat) {
+                            case 'fullname':
+                              return (
+                                <Typography variant="text">
+                                  {`${watchLastName ? watchLastName : '(苗字)'} ${watchFirstName ? watchFirstName : '(名前)'}`}
+                                </Typography>
+                              )
+                            case 'firstname':
+                              return (
+                                <Typography variant="text">
+                                  {`${watchFirstName ? watchFirstName : '(名前)'}`}
+                                </Typography>
+                              )
+                            case 'lastname':
+                              return (
+                                <Typography variant="text">
+                                  {`${watchLastName ? watchLastName : '(苗字)'}`}
+                                </Typography>
+                              )
+                            case 'nickname':
+                              return (
+                                <Typography variant="text">
+                                  {`${watchNickName ? watchNickName : '(ニックネーム)'}`}
+                                </Typography>
+                              )
+                          }
+                        })()}
+                      </div>
+                      <RadioGroup
+                        id="display-name-format"
+                        aria-labelledby="display-name-format"
+                        {...field}
+                        className="pl-8"
+                      >
+                        <FormControlLabel value="fullname" control={<Radio size="small" />} label="フルネーム" />
+                        <FormControlLabel value="lastname" control={<Radio size="small" />} label="苗字" />
+                        <FormControlLabel value="firstname" control={<Radio size="small" />} label="名前" />
+                        <FormControlLabel value="nickname" control={<Radio size="small" />} label="ニックネーム" />
+                      </RadioGroup>
+                      <FormHelperText error={!!error}>{error?.message}</FormHelperText>
+                    </FormControl>
                   )}
                 />
                 <Controller
                   name="universityId"
                   control={control}
                   defaultValue={""}
-                  render={({ field }) => (
-                    <FormControl variant="standard">
+                  rules={{
+                    required: { value: true, message: "大学を選択したください。"}
+                  }}
+                  render={({ field, fieldState: { error } }) => (
+                    <FormControl
+                      required
+                      variant="standard"
+                      error={!!error}
+                    >
                       <InputLabel id="university">大学</InputLabel>
                       <Select
                         labelId="university"
@@ -215,6 +308,7 @@ const Page: NextPage = () => {
                       >
                         {selectUniversityItems}
                       </Select>
+                      <FormHelperText error={!!error}>{error?.message}</FormHelperText>
                     </FormControl>
                   )}
                 />
@@ -223,8 +317,15 @@ const Page: NextPage = () => {
                     name="facultyId"
                     control={control}
                     defaultValue={""}
-                    render={({ field }) => (
-                      <FormControl variant="standard">
+                    rules={{
+                      required: { value: true, message: "学部を選択したください。"}
+                    }}
+                    render={({ field, fieldState: { error } }) => (
+                      <FormControl
+                        required
+                        variant="standard"
+                        error={!!error}
+                      >
                         <InputLabel id="faculty">学部</InputLabel>
                         <Select
                           labelId="faculty"
@@ -240,6 +341,7 @@ const Page: NextPage = () => {
                         >
                           {selectFacultyItems}
                         </Select>
+                        <FormHelperText error={!!error}>{error?.message}</FormHelperText>
                       </FormControl>
                     )}
                   />
@@ -249,8 +351,15 @@ const Page: NextPage = () => {
                     name="departmentId"
                     control={control}
                     defaultValue={""}
-                    render={({ field }) => (
-                      <FormControl variant="standard">
+                    rules={{
+                      required: { value: faculties[watchFacultyId].requireDepartment, message: "学科を選択したください。"}
+                    }}
+                    render={({ field, fieldState: { error } }) => (
+                      <FormControl
+                        required={faculties[watchFacultyId].requireDepartment}
+                        variant="standard"
+                        error={!!error}
+                      >
                         <InputLabel id="department">学科</InputLabel>
                         <Select
                           labelId="department"
@@ -259,6 +368,7 @@ const Page: NextPage = () => {
                         >
                           {selectDepartmentItems}
                         </Select>
+                        <FormHelperText error={!!error}>{error?.message}</FormHelperText>
                       </FormControl>
                     )}
                   />
@@ -267,13 +377,19 @@ const Page: NextPage = () => {
                   name="email"
                   control={control}
                   defaultValue={""}
-                  render={({ field }) => (
+                  rules={{
+                    required: { value: true, message: "メールアドレスを選択したください。"}
+                  }}
+                  render={({ field, fieldState: { error } }) => (
                     <TextField
+                      required
                       id="email"
                       label="メールアドレス"
                       type="email"
                       variant="standard"
                       autoComplete="email"
+                      error={!!error}
+                      helperText={error?.message}
                       {...field}
                     />
                   )}
@@ -282,13 +398,20 @@ const Page: NextPage = () => {
                   name="password"
                   control={control}
                   defaultValue={""}
-                  render={({ field }) => (
+                  rules={{
+                    required: { value: true, message: "パスワードをを選択したください。"},
+                    minLength: { value: 6, message: "パスワードは6文字以上です。"}
+                  }}
+                  render={({ field, fieldState: { error } }) => (
                     <TextField
+                      required
                       id="password"
                       label="パスワード"
                       type="password"
                       variant="standard"
                       autoComplete="current-password"
+                      error={!!error}
+                      helperText={error?.message}
                       {...field}
                     />
                   )}
