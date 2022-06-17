@@ -143,9 +143,18 @@ const Page: NextPage = () => {
           lastName,
           nickName,
           displayNameFormat,
-          university: universities[universityId].name,
-          faculty: faculties[facultyId].name,
-          department: departments[departmentId].name,
+          university: {
+            id: universityId,
+            name: universities[universityId].name
+          },
+          faculty: {
+            id: facultyId,
+            name:faculties[facultyId].name
+          },
+          department: {
+            id: departmentId,
+            name: departments[departmentId].name
+          },
         })
           .then(() => {
             router.push('/home')
