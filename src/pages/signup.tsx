@@ -66,7 +66,9 @@ type DepartmentType = {
 const Page: NextPage = () => {
   const [registering, setRegistering] = useState(false)
   const router = useRouter()
-  const { control, handleSubmit, setValue } = useForm<FormData>()
+  const { control, handleSubmit, setValue } = useForm<FormData>({
+    defaultValues: { displayNameFormat: 'fullname' }
+  })
   const watchUniversityId = useWatch({ control, name: 'universityId' })
   const watchFacultyId = useWatch({ control, name: 'facultyId' })
   const watchDisplayNameFotmat = useWatch({ control, name: 'displayNameFormat' })
@@ -244,30 +246,30 @@ const Page: NextPage = () => {
                       error={!!error}
                     >
                       <FormLabel id="display-name-format">表示名</FormLabel>
-                      <div className="text-center mt-2">
+                      <div className="text-center my-2">
                         {(() => {
                           switch (watchDisplayNameFotmat) {
                             case 'fullname':
                               return (
-                                <Typography variant="text">
+                                <Typography variant="text" className="font-semibold">
                                   {`${watchLastName ? watchLastName : '(苗字)'} ${watchFirstName ? watchFirstName : '(名前)'}`}
                                 </Typography>
                               )
                             case 'firstname':
                               return (
-                                <Typography variant="text">
+                                <Typography variant="text" className="font-semibold">
                                   {`${watchFirstName ? watchFirstName : '(名前)'}`}
                                 </Typography>
                               )
                             case 'lastname':
                               return (
-                                <Typography variant="text">
+                                <Typography variant="text" className="font-semibold">
                                   {`${watchLastName ? watchLastName : '(苗字)'}`}
                                 </Typography>
                               )
                             case 'nickname':
                               return (
-                                <Typography variant="text">
+                                <Typography variant="text" className="font-semibold">
                                   {`${watchNickName ? watchNickName : '(ニックネーム)'}`}
                                 </Typography>
                               )
