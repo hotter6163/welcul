@@ -11,6 +11,7 @@ import { auth, useCurrentUser } from 'app/firebase'
 import { CustomThemeProvider } from 'theme/CustomThemeProvider'
 
 const pagesNotLogin = ['/', '/signup', '/login']
+const pagesLogin: string[] = []
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -19,10 +20,14 @@ function App({ Component, pageProps }: AppProps) {
   // ログイン状態に応じたリダイレクト処理
   // 一回そのページが表示されるのをなくしたいが、、、
   useEffect(() => {
-    console.log(user)
     if (pagesNotLogin.includes(router.pathname)) {
       if (user) {
         router.replace('/home')
+      }
+    }
+    if (pagesLogin.includes(router.pathname)) {
+      if (!user) {
+        router.replace('/login')
       }
     }
   }, [user])
