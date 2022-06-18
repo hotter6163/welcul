@@ -1,7 +1,11 @@
 import type { ReactNode, VFC } from 'react'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { orange, lightBlue } from '@mui/material/colors'
+import {
+  orange,
+  lightBlue,
+  deepOrange
+} from '@mui/material/colors'
 
 import 'theme/moduleAugmentation'
 
@@ -22,6 +26,16 @@ let theme = createTheme({
     },
     accent: {
       main: lightBlue['A700'],
+      contrastText: '#fff',
+    },
+    clubMain: {
+      main: lightBlue[400],
+    },
+    clubBase: {
+      main: lightBlue[100],
+    },
+    clubAccent: {
+      main: orange[600],
       contrastText: '#fff',
     }
   },
@@ -46,6 +60,7 @@ theme = createTheme(theme, {
       main: theme.palette.main.main,
       base: theme.palette.base.main,
       accent: theme.palette.accent.main,
+      clubMain: theme.palette.clubMain.main,
     },
     text: {
       accent: theme.palette.accent.main

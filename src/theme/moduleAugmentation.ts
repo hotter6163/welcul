@@ -6,11 +6,17 @@ declare module '@mui/material/styles' {
     main: Palette['primary']
     base: Palette['primary']
     accent: Palette['primary']
+    clubMain: Palette['primary']
+    clubBase: Palette['primary']
+    clubAccent: Palette['primary']
   }
   interface PaletteOptions {
     main?: PaletteOptions['primary']
     base?: PaletteOptions['primary']
     accent?: PaletteOptions['primary']
+    clubMain?: PaletteOptions['primary']
+    clubBase?: PaletteOptions['primary']
+    clubAccent?: PaletteOptions['primary']
   }
 
   // Typography
@@ -58,6 +64,7 @@ declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     main: true;
     accent: true;
+    clubAccent: true;
   }
 }
 

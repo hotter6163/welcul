@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 
 const Page: NextPage = () => {
   return (
-    <h1>部活用ページ</h1>
+    <h1>部活登録</h1>
   )
 }
 
