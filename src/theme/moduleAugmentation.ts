@@ -56,6 +56,7 @@ declare module '@mui/material/Typography' {
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
+    main: true;
     accent: true;
   }
 }

@@ -17,6 +17,7 @@ import { wrapInLayout } from 'components/layouts/wrapInLayout'
 import { Logo } from 'components/layouts/Logo'
 
 import 'theme/moduleAugmentation'
+import styles from 'styles/top.module.scss'
 
 type DisplayItem = {
   id: string
@@ -46,7 +47,10 @@ const Page: NextPage<PageProps> = ({ displayItems }) => {
     <Box component="main">
       <Box
         component="section"
-        sx={{ bgcolor: 'background.main' }}
+        className={styles.topLine}
+        sx={{
+          bgcolor: 'background.main',
+        }}
       >
         <Container sx={{ maxWidth: 1200 }}>
           <Grid container className="h-screen" sx={{ pb: "1.5rem" }}>
@@ -96,7 +100,7 @@ const Page: NextPage<PageProps> = ({ displayItems }) => {
                     <Typography
                       variant="h4"
                       component="p"
-                      className="inline text-white"
+                      className="inline text-white font-semibold"
                     >
                       ご利用はこちらから
                     </Typography>
