@@ -7,8 +7,10 @@ import {
   Button,
   Container,
   Grid,
+  Stack,
   Typography,
 } from '@mui/material'
+import { blue } from '@mui/material/colors'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 
 import { wrapInLayout } from 'components/layouts/wrapInLayout'
@@ -26,7 +28,20 @@ type PageProps = {
   displayItems: DisplayItem[]
 }
 
-const Page: NextPage<PageProps> = () => {
+const Page: NextPage<PageProps> = ({ displayItems }) => {
+  const renderedDisplayItems = displayItems.map((item, index) => (
+    <Box
+      key={item.id}
+      component="section"
+      sx={{ bgcolor: index % 2 === 1 ? "background.base" : "#fff" }}
+    >
+      <Container className="py-4" sx={{ maxWidth: 900 }}>
+        <Typography variant="h3">{item.title}</Typography>
+        <Typography variant="text">{item.text}</Typography>
+      </Container>
+    </Box>
+  ))
+
   return wrapInLayout('top',
     <Box component="main">
       <Box
@@ -68,7 +83,7 @@ const Page: NextPage<PageProps> = () => {
               }
             }}>
               <div className="self-center w-full">
-                <Grid container className="justify-center ">
+                <Grid container className="justify-center">
                   <Grid item xs={1}>
                     <ArrowDownwardIcon
                       sx={{
@@ -142,6 +157,45 @@ const Page: NextPage<PageProps> = () => {
           </Grid>
         </Container>
       </Box>
+      {renderedDisplayItems}
+      <Stack
+        component="section"
+        className="justify-center"
+        sx={{
+          Width: "100%",
+          height: "30vh",
+          bgcolor: blue[700]
+        }}
+      >
+        <div className="text-center x-8">
+          <Typography
+            variant="h5"
+            component="p"
+            className="text-white mb-4"
+          >
+            部活・サークル関係者はこちら
+          </Typography>
+        </div>
+        <Box
+          className="text-center self-center flex"
+        >
+          <Link href="/clubs">
+            <Button
+              variant="outlined"
+              color="accent"
+              size="large"
+              sx={{
+                bgcolor: "#fff",
+                ":hover": {
+                  bgcolor: "#fff",
+                }
+              }}
+            >
+              部活・サークル用ページへ
+            </Button>
+          </Link>
+        </Box>
+      </Stack>
     </Box>
   )
 }
