@@ -1,6 +1,9 @@
 import type { NextPage } from 'next'
 import {
-  Box, Button, Container, Grid
+  Box,
+  Container,
+  Grid,
+  Typography
 } from '@mui/material'
 
 import 'theme/moduleAugmentation'
@@ -16,7 +19,9 @@ const Page: NextPage = () => {
       >
         <Container sx={{ maxWidth: 1200 }}>
           <Grid container className="h-screen" sx={{ pb: "1.5rem" }}>
-            
+            <Typography variant="h2" component="h1">
+              Welcul for clubs
+            </Typography>
           </Grid>
         </Container>
       </Box>
