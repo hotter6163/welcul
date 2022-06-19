@@ -19,7 +19,7 @@ const Page: NextPage = () => {
       >
         <Container sx={{ maxWidth: 1200 }}>
           <Grid container className="h-screen" sx={{ pb: "1.5rem" }}>
-            <Typography varinant="h2" component="h1">
+            <Typography variant="h2" component="h1">
               Welcul for clubs
             </Typography>
           </Grid>
